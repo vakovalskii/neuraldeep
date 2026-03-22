@@ -1,8 +1,17 @@
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import Leaderboard from "@/components/Leaderboard";
+import { getSkills, getTotalInstalls, getTotalTrending } from "@/data/skills";
 
-export default function Home() {
+export const dynamic = "force-dynamic";
+
+export default async function Home() {
+  const [skills, totalInstalls, totalTrending] = await Promise.all([
+    getSkills(),
+    getTotalInstalls(),
+    getTotalTrending(),
+  ]);
+
   return (
     <>
       <Header />
@@ -12,7 +21,11 @@ export default function Home() {
             <Hero />
           </aside>
           <section>
-            <Leaderboard />
+            <Leaderboard
+              initialSkills={skills}
+              totalInstalls={totalInstalls}
+              totalTrending={totalTrending}
+            />
           </section>
         </div>
       </main>

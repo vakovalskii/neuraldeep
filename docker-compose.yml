@@ -1,0 +1,74 @@
+services:
+  traefik:
+    image: traefik:v3.2
+    restart: unless-stopped
+    command:
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+      - "--entrypoints.web.http.redirections.entryPoint.to=websecure"
+      - "--certificatesresolvers.le.acme.tlschallenge=true"
+      - "--certificatesresolvers.le.acme.email=admin@skillsbd.ru"
+      - "--certificatesresolvers.le.acme.storage=/letsencrypt/acme.json"
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - letsencrypt:/letsencrypt
+    mem_limit: 64m
+
+  app:
+    build:
+      context: ./web
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      - DATABASE_URL=postgresql://skills:${POSTGRES_PASSWORD}@postgres:5432/skillsdb
+      - NEXTAUTH_URL=https://skillsbd.ru
+      - NEXTAUTH_SECRET=${NEXTAUTH_SECRET}
+      - AUTH_SECRET=${NEXTAUTH_SECRET}
+      - AUTH_TRUST_HOST=true
+      - GITHUB_CLIENT_ID=${GITHUB_CLIENT_ID}
+      - GITHUB_CLIENT_SECRET=${GITHUB_CLIENT_SECRET}
+      - SKILLS_STORAGE_PATH=/app/data/skills-content
+    volumes:
+      - skills_content:/app/data/skills-content
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.app.rule=Host(`skillsbd.ru`)"
+      - "traefik.http.routers.app.entrypoints=websecure"
+      - "traefik.http.routers.app.tls.certresolver=le"
+      - "traefik.http.services.app.loadbalancer.server.port=3000"
+    mem_limit: 384m
+
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      - POSTGRES_DB=skillsdb
+      - POSTGRES_USER=skills
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U skills -d skillsdb"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    command: >
+      postgres
+        -c shared_buffers=64MB
+        -c work_mem=4MB
+        -c effective_cache_size=256MB
+        -c max_connections=20
+    mem_limit: 256m
+
+volumes:
+  letsencrypt:
+  pgdata:
+  skills_content:

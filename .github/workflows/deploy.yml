@@ -1,0 +1,43 @@
+name: Deploy to Yandex Cloud
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1
+        with:
+          host: 62.84.116.76
+          username: ubuntu
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            set -e
+
+            # Clone or pull
+            if [ ! -d /opt/skillsbd ]; then
+              git clone https://github.com/vakovalskii/skillsbd.git /opt/skillsbd
+            fi
+            cd /opt/skillsbd
+            git fetch origin main
+            git reset --hard origin/main
+
+            # Ensure .env exists
+            if [ ! -f .env ]; then
+              echo "ERROR: /opt/skillsbd/.env not found. Create it from .env.production"
+              exit 1
+            fi
+
+            # Build and deploy
+            docker compose up -d --build --remove-orphans
+
+            # Run migrations
+            docker compose exec -T app npx prisma migrate deploy || true
+
+            # Cleanup old images
+            docker image prune -f
+
+            echo "Deploy complete!"

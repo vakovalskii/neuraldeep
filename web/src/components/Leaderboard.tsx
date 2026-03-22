@@ -1,24 +1,26 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { skills, formatInstalls, type Skill } from "@/data/skills";
+import { formatInstalls, type Skill } from "@/data/skills";
 
 type SortMode = "all" | "trending" | "hot";
 
-function getTotalInstalls(list: Skill[]): number {
-  return list.reduce((sum, s) => sum + s.installs, 0);
+interface LeaderboardProps {
+  initialSkills: Skill[];
+  totalInstalls: number;
+  totalTrending: number;
 }
 
-function getTotalTrending(list: Skill[]): number {
-  return list.reduce((sum, s) => sum + s.trending24h, 0);
-}
-
-export default function Leaderboard() {
+export default function Leaderboard({
+  initialSkills,
+  totalInstalls,
+  totalTrending,
+}: LeaderboardProps) {
   const [sortMode, setSortMode] = useState<SortMode>("all");
   const [search, setSearch] = useState("");
 
   const filtered = useMemo(() => {
-    let list = [...skills];
+    let list = [...initialSkills];
 
     if (search) {
       const q = search.toLowerCase();
@@ -47,7 +49,7 @@ export default function Leaderboard() {
     }
 
     return list;
-  }, [sortMode, search]);
+  }, [sortMode, search, initialSkills]);
 
   return (
     <div className="flex flex-col gap-4">
@@ -77,7 +79,7 @@ export default function Leaderboard() {
         >
           За все время{" "}
           <span className="text-gray-600">
-            ({formatInstalls(getTotalInstalls(skills))})
+            ({formatInstalls(totalInstalls)})
           </span>
         </button>
         <button
@@ -90,7 +92,7 @@ export default function Leaderboard() {
         >
           Тренды 24ч{" "}
           <span className="text-gray-600">
-            ({formatInstalls(getTotalTrending(skills))})
+            ({formatInstalls(totalTrending)})
           </span>
         </button>
         <button
@@ -139,7 +141,9 @@ export default function Leaderboard() {
 
         {filtered.length === 0 && (
           <div className="py-12 text-center text-sm text-gray-600">
-            Навыки не найдены
+            {initialSkills.length === 0
+              ? "Пока нет навыков. Будьте первым!"
+              : "Навыки не найдены"}
           </div>
         )}
       </div>
