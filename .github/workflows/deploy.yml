@@ -8,7 +8,27 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Deploy via SSH
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup SSH key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -H 62.84.116.76 >> ~/.ssh/known_hosts
+
+      - name: Rsync to server
+        run: |
+          rsync -avz --delete \
+            --exclude .git \
+            --exclude .env \
+            --exclude node_modules \
+            --exclude .next \
+            -e "ssh -i ~/.ssh/deploy_key" \
+            ./ ubuntu@62.84.116.76:/opt/skillsbd/
+
+      - name: Build and deploy
         uses: appleboy/ssh-action@v1
         with:
           host: 62.84.116.76
@@ -16,28 +36,13 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             set -e
-
-            # Clone or pull
-            if [ ! -d /opt/skillsbd ]; then
-              git clone https://github.com/vakovalskii/skillsbd.git /opt/skillsbd
-            fi
             cd /opt/skillsbd
-            git fetch origin main
-            git reset --hard origin/main
 
-            # Ensure .env exists
             if [ ! -f .env ]; then
-              echo "ERROR: /opt/skillsbd/.env not found. Create it from .env.production"
+              echo "ERROR: /opt/skillsbd/.env not found"
               exit 1
             fi
 
-            # Build and deploy
             docker compose up -d --build --remove-orphans
-
-            # Run migrations
-            docker compose exec -T app npx prisma migrate deploy || true
-
-            # Cleanup old images
             docker image prune -f
-
             echo "Deploy complete!"
