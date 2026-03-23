@@ -10,7 +10,7 @@ export const metadata = {
 
 export default async function OfficialPage() {
   const skills = await prisma.skill.findMany({
-    where: { owner: "skillsbd" },
+    where: { featured: true },
     orderBy: { installs: "desc" },
   });
 

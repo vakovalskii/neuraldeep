@@ -93,6 +93,7 @@ async function checkSecurity(owner: string, repo: string, skillName: string): Pr
   try {
     // Try to find SKILL.md in skills/<name>/ or plugins/<name>/ or root
     const paths = [
+      `plugins/${skillName}/skills/${skillName}`,
       `plugins/${skillName}/skills`,
       `plugins/${skillName}`,
       `skills/${skillName}`,
