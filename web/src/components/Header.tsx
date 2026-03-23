@@ -8,18 +8,11 @@ export default function Header() {
     <header className="sticky top-0 z-50 flex h-14 items-center justify-between border-b border-gray-800 bg-background/80 backdrop-blur-md px-4">
       <div className="flex items-center gap-3">
         <Link href="/" className="flex items-center gap-2">
-          <svg
-            width="20"
-            height="20"
-            viewBox="0 0 24 24"
-            fill="none"
-            className="text-foreground"
-          >
-            <path d="M12 2L2 19.5h20L12 2z" fill="currentColor" />
-          </svg>
-          <span className="h-5 w-px bg-gray-700" />
-          <span className="text-lg font-medium tracking-tight">
-            Skills<span className="text-accent">.RU</span>
+          <span className="flex h-6 w-6 items-center justify-center rounded bg-accent text-[10px] font-bold text-white">
+            sb
+          </span>
+          <span className="text-lg font-semibold tracking-tight">
+            skillsbd
           </span>
         </Link>
       </div>

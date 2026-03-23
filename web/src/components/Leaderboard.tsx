@@ -127,9 +127,26 @@ export default function Leaderboard({
               <span className="text-sm font-medium text-foreground truncate">
                 {skill.name}
               </span>
-              <span className="text-xs text-gray-600 font-mono truncate">
-                {skill.owner}/{skill.repo}
-              </span>
+              <div className="flex items-center gap-2 text-xs text-gray-600 truncate">
+                <span className="font-mono">{skill.owner}/{skill.repo}</span>
+                {skill.authorName && (
+                  <span className="text-gray-500">
+                    {skill.telegramLink ? (
+                      <a
+                        href={skill.telegramLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="hover:text-accent transition-colors"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        {skill.authorName}
+                      </a>
+                    ) : (
+                      skill.authorName
+                    )}
+                  </span>
+                )}
+              </div>
             </div>
             <span className="text-sm text-gray-400 text-right font-mono">
               {sortMode === "trending"

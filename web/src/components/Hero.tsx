@@ -1,12 +1,4 @@
 export default function Hero() {
-  const asciiArt = `
- ███████╗██╗  ██╗██╗██╗     ██╗     ███████╗
- ██╔════╝██║ ██╔╝██║██║     ██║     ██╔════╝
- ███████╗█████╔╝ ██║██║     ██║     ███████╗
- ╚════██║██╔═██╗ ██║██║     ██║     ╚════██║
- ███████║██║  ██╗██║███████╗███████╗███████║
- ╚══════╝╚═╝  ╚═╝╚═╝╚══════╝╚══════╝╚══════╝`.trim();
-
   const agents = [
     "Claude Code",
     "Cursor",
@@ -24,12 +16,17 @@ export default function Hero() {
 
   return (
     <div className="flex flex-col gap-6 py-8 lg:py-12">
-      <pre className="font-mono text-[8px] leading-[1.1] text-accent sm:text-[10px] lg:text-xs select-none">
-        {asciiArt}
-      </pre>
+      <div className="flex items-baseline gap-2">
+        <h1 className="text-4xl font-bold tracking-tight lg:text-5xl">
+          skillsbd
+        </h1>
+        <span className="rounded bg-accent/10 px-2 py-0.5 text-xs font-medium text-accent">
+          beta
+        </span>
+      </div>
 
       <p className="font-mono text-xs uppercase tracking-widest text-gray-500">
-        Открытая экосистема навыков для AI-агентов
+        Открытый каталог навыков для AI-агентов
       </p>
 
       <p className="max-w-md text-[15px] leading-relaxed text-gray-400 lg:text-base">

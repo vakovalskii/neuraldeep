@@ -13,10 +13,53 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const title = "skillsbd — каталог навыков для AI-агентов";
+const description =
+  "Открытый каталог переиспользуемых навыков для Claude Code, Cursor, Copilot и других AI-агентов. Находите, устанавливайте и делитесь навыками.";
+const url = "https://skillsbd.ru";
+
 export const metadata: Metadata = {
-  title: "Skills.RU - Открытая экосистема навыков для AI-агентов",
-  description:
-    "Находите, устанавливайте и делитесь навыками для AI-агентов. Российский каталог переиспользуемых возможностей для Claude Code, Cursor и других.",
+  metadataBase: new URL(url),
+  title: {
+    default: title,
+    template: "%s | skillsbd",
+  },
+  description,
+  keywords: [
+    "AI навыки",
+    "AI агенты",
+    "Claude Code",
+    "Cursor",
+    "Copilot",
+    "Windsurf",
+    "Cline",
+    "навыки для агентов",
+    "skills",
+    "каталог навыков",
+    "skillsbd",
+  ],
+  authors: [{ name: "skillsbd" }],
+  creator: "skillsbd",
+  openGraph: {
+    type: "website",
+    locale: "ru_RU",
+    url,
+    siteName: "skillsbd",
+    title,
+    description,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title,
+    description,
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+  alternates: {
+    canonical: url,
+  },
 };
 
 export default function RootLayout({

@@ -47,11 +47,13 @@ model Skill {
   trending24h Int      @default(0)
   category    String
   tags        String[]
-  contentPath String?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  authorId    String?
-  author      User?    @relation(fields: [authorId], references: [id])
+  contentPath  String?
+  authorName   String?
+  telegramLink String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  authorId     String?
+  author       User?    @relation(fields: [authorId], references: [id])
 
   @@index([category])
   @@index([installs])

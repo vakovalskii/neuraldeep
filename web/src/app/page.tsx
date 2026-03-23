@@ -30,7 +30,7 @@ export default async function Home() {
         </div>
       </main>
       <footer className="border-t border-gray-800 py-6 text-center text-xs text-gray-600">
-        Skills.RU — открытая экосистема навыков для AI-агентов в России
+        skillsbd — открытый каталог навыков для AI-агентов
       </footer>
     </>
   );

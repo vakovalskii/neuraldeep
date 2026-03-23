@@ -10,6 +10,8 @@ export interface Skill {
   trending24h: number;
   category: string;
   tags: string[];
+  authorName: string | null;
+  telegramLink: string | null;
 }
 
 export async function getSkills(sort: "all" | "trending" = "all"): Promise<Skill[]> {
