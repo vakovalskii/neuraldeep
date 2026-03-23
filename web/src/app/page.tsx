@@ -48,6 +48,15 @@ export default async function Home() {
             </ul>
           </div>
           <div>
+            <h4 className="font-medium text-foreground mb-3">Навыки по агентам</h4>
+            <ul className="space-y-2 text-gray-500">
+              <li><a href="/claude-code-skills" className="hover:text-foreground transition-colors">Claude Code Skills</a></li>
+              <li><a href="/cursor-ai-skills" className="hover:text-foreground transition-colors">Cursor AI Skills</a></li>
+              <li><a href="/ai-agents" className="hover:text-foreground transition-colors">AI агенты</a></li>
+              <li><a href="/claude-code-russia" className="hover:text-foreground transition-colors">Claude Code в России</a></li>
+            </ul>
+          </div>
+          <div>
             <h4 className="font-medium text-foreground mb-3">Сообщество</h4>
             <ul className="space-y-2 text-gray-500">
               <li><a href="https://github.com/vakovalskii/skillsbd-skills" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors">GitHub</a></li>
