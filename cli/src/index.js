@@ -5,8 +5,9 @@ import { existsSync, mkdirSync, writeFileSync, readFileSync } from "fs";
 import { join, resolve } from "path";
 import { get } from "https";
 
-const VERSION = "0.2.0";
+const VERSION = "0.3.0";
 const API_URL = "https://skillsbd.ru/api/skills";
+const INSTALL_URL = "https://skillsbd.ru/api/skills/install";
 
 const HELP = `
   skillsbd - CLI для установки навыков AI-агентов
@@ -90,6 +91,7 @@ function cloneSkill(ownerRepo, skillName) {
       const content = readFileSync(rootSkill, "utf-8");
       writeFileSync(join(destDir, "SKILL.md"), content);
       success(`Установлен навык: ${repo}`);
+      trackInstall(repo, owner, repo);
     } else {
       error("Навыки не найдены в репозитории (нет директории skills/ или SKILL.md)");
     }
@@ -117,6 +119,7 @@ function cloneSkill(ownerRepo, skillName) {
         // Copy all files from skill directory
         execSync(`cp -r "${join(skillsPath, entry)}/." "${destDir}/"`);
         success(`Установлен: ${entry}`);
+        trackInstall(entry, owner, repo);
         installed++;
       }
     }
@@ -137,6 +140,14 @@ function cleanup(dir) {
   try {
     execSync(`rm -rf "${dir}"`);
   } catch {}
+}
+
+function trackInstall(name, owner, repo) {
+  fetch(INSTALL_URL, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ name, owner, repo }),
+  }).catch(() => {});
 }
 
 function listSkills() {
