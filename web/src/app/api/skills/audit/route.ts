@@ -27,9 +27,14 @@ interface GHUser {
 }
 
 async function ghFetch(url: string): Promise<Response> {
-  return fetch(url, {
-    headers: { "User-Agent": "skillsbd-audit", Accept: "application/vnd.github+json" },
-  });
+  const headers: Record<string, string> = {
+    "User-Agent": "skillsbd-audit",
+    Accept: "application/vnd.github+json",
+  };
+  if (process.env.GITHUB_TOKEN) {
+    headers.Authorization = `Bearer ${process.env.GITHUB_TOKEN}`;
+  }
+  return fetch(url, { headers });
 }
 
 async function checkRepo(owner: string, repo: string): Promise<{ status: string; details: string }> {
