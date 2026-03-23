@@ -30,7 +30,7 @@ export default async function Home() {
         </div>
       </main>
       <footer className="border-t border-gray-800 py-8 px-4">
-        <div className="mx-auto max-w-6xl grid grid-cols-2 sm:grid-cols-4 gap-6 text-sm">
+        <div className="mx-auto max-w-6xl grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6 text-sm">
           <div>
             <h4 className="font-medium text-foreground mb-3">Каталог</h4>
             <ul className="space-y-2 text-gray-500">

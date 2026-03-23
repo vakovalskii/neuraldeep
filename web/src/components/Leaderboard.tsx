@@ -136,7 +136,7 @@ export default function Leaderboard({
                 )}
               </span>
               <div className="flex items-center gap-2 text-xs text-gray-600 truncate">
-                <span className="font-mono">{skill.owner}/{skill.repo}</span>
+                <span className="font-mono hidden sm:inline">{skill.owner}/{skill.repo}</span>
                 {skill.authorName && (
                   <span className="text-gray-500">
                     {skill.telegramLink ? (

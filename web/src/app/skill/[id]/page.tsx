@@ -67,7 +67,7 @@ export default async function SkillPage({ params }: { params: Promise<{ id: stri
         {/* Install */}
         <div className="mb-8">
           <h2 className="text-lg font-semibold mb-3">Установка</h2>
-          <div className="rounded-lg border border-gray-800 bg-gray-900 px-4 py-3 font-mono text-sm">
+          <div className="rounded-lg border border-gray-800 bg-gray-900 px-4 py-3 font-mono text-sm overflow-x-auto whitespace-nowrap">
             <span className="text-gray-500">$ </span>
             npx skillsbd add {skill.owner}/{skill.repo}/{skill.name}
           </div>
