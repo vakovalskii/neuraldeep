@@ -5,25 +5,26 @@ import { existsSync, mkdirSync, writeFileSync, readFileSync } from "fs";
 import { join, resolve } from "path";
 import { get } from "https";
 
-const VERSION = "0.1.0";
+const VERSION = "0.2.0";
 const API_URL = "https://skillsbd.ru/api/skills";
 
 const HELP = `
   skillsbd - CLI для установки навыков AI-агентов
 
   Использование:
-    npx skillsbd add <owner/repo>           Установить все навыки из репозитория
-    npx skillsbd add <owner/repo/skill>     Установить конкретный навык
-    npx skillsbd list                       Показать установленные навыки
-    npx skillsbd search <запрос>            Поиск навыков в каталоге
-    npx skillsbd remove <skill>             Удалить навык
-    npx skillsbd --help                     Показать справку
-    npx skillsbd --version                  Показать версию
+    npx skillsbd add <owner/repo>                          Установить все навыки
+    npx skillsbd add <owner/repo/skill>                    Установить конкретный навык
+    npx skillsbd add <github-url> --skill <name>           Установить по URL
+    npx skillsbd search <запрос>                           Поиск в каталоге
+    npx skillsbd list                                      Установленные навыки
+    npx skillsbd remove <skill>                            Удалить навык
+    npx skillsbd --help                                    Справка
+    npx skillsbd --version                                 Версия
 
   Примеры:
-    npx skillsbd add skillsbd/agent-skills
-    npx skillsbd add skillsbd/agent-skills/react-best-practices
-    npx skillsbd search react
+    npx skillsbd add artwist-polyakov/polyakov-claude-skills/yandex-wordstat
+    npx skillsbd add https://github.com/artwist-polyakov/polyakov-claude-skills --skill yandex-wordstat
+    npx skillsbd search яндекс
     npx skillsbd list
 
   Каталог: https://skillsbd.ru
@@ -267,9 +268,31 @@ console.log("  \x1b[36mskillsbd\x1b[0m \x1b[90m— навыки для AI-аге
 switch (command) {
   case "add":
   case "install":
-  case "i":
-    cloneSkill(args[1], args[2]);
+  case "i": {
+    let target = args[1];
+    let skillName = args[2];
+
+    // Parse --skill flag
+    const skillIdx = args.indexOf("--skill");
+    if (skillIdx !== -1 && args[skillIdx + 1]) {
+      skillName = args[skillIdx + 1];
+      if (target === "--skill") target = args[2];
+    }
+
+    // Parse GitHub URL: https://github.com/owner/repo
+    if (target && target.startsWith("https://github.com/")) {
+      const urlPath = target.replace("https://github.com/", "").replace(/\/$/, "");
+      target = urlPath;
+    }
+
+    if (!target) {
+      error("Укажите репозиторий: npx skillsbd add <owner/repo>");
+      process.exit(1);
+    }
+
+    cloneSkill(target, skillName);
     break;
+  }
   case "list":
   case "ls":
     listSkills();
