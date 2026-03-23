@@ -9,22 +9,22 @@ const VERSION = "0.1.0";
 const API_URL = "https://skillsbd.ru/api/skills";
 
 const HELP = `
-  skillsru - CLI для установки навыков AI-агентов
+  skillsbd - CLI для установки навыков AI-агентов
 
   Использование:
-    npx skillsru add <owner/repo>           Установить все навыки из репозитория
-    npx skillsru add <owner/repo/skill>     Установить конкретный навык
-    npx skillsru list                       Показать установленные навыки
-    npx skillsru search <запрос>            Поиск навыков в каталоге
-    npx skillsru remove <skill>             Удалить навык
-    npx skillsru --help                     Показать справку
-    npx skillsru --version                  Показать версию
+    npx skillsbd add <owner/repo>           Установить все навыки из репозитория
+    npx skillsbd add <owner/repo/skill>     Установить конкретный навык
+    npx skillsbd list                       Показать установленные навыки
+    npx skillsbd search <запрос>            Поиск навыков в каталоге
+    npx skillsbd remove <skill>             Удалить навык
+    npx skillsbd --help                     Показать справку
+    npx skillsbd --version                  Показать версию
 
   Примеры:
-    npx skillsru add skillsru/agent-skills
-    npx skillsru add skillsru/agent-skills/react-best-practices
-    npx skillsru search react
-    npx skillsru list
+    npx skillsbd add skillsbd/agent-skills
+    npx skillsbd add skillsbd/agent-skills/react-best-practices
+    npx skillsbd search react
+    npx skillsbd list
 
   Каталог: https://skillsbd.ru
 `;
@@ -141,7 +141,7 @@ function cleanup(dir) {
 function listSkills() {
   const dir = resolve(process.cwd(), AGENTS_DIR);
   if (!existsSync(dir)) {
-    log("Навыки не установлены. Используйте: npx skillsru add <owner/repo>");
+    log("Навыки не установлены. Используйте: npx skillsbd add <owner/repo>");
     return;
   }
 
@@ -179,7 +179,7 @@ function listSkills() {
 
 function removeSkill(name) {
   if (!name) {
-    error("Укажите имя навыка: npx skillsru remove <name>");
+    error("Укажите имя навыка: npx skillsbd remove <name>");
     process.exit(1);
   }
 
@@ -217,7 +217,7 @@ function formatInstalls(n) {
 
 async function searchSkills(query) {
   if (!query) {
-    error("Укажите запрос: npx skillsru search <запрос>");
+    error("Укажите запрос: npx skillsbd search <запрос>");
     process.exit(1);
   }
 
@@ -240,7 +240,7 @@ async function searchSkills(query) {
       );
     }
     console.log();
-    log(`Установка: npx skillsru add <owner/repo>`);
+    log(`Установка: npx skillsbd add <owner/repo>`);
   } catch {
     log("Не удалось подключиться к каталогу. Проверьте подключение к сети.");
     log(`Каталог: https://skillsbd.ru`);
@@ -257,7 +257,7 @@ if (!command || command === "--help" || command === "-h") {
 }
 
 if (command === "--version" || command === "-v") {
-  console.log(`skillsru v${VERSION}`);
+  console.log(`skillsbd v${VERSION}`);
   process.exit(0);
 }
 

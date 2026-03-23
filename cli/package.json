@@ -1,9 +1,9 @@
 {
-  "name": "skillsru",
+  "name": "skillsbd",
   "version": "0.1.0",
   "description": "CLI для установки навыков AI-агентов из каталога skillsbd",
   "bin": {
-    "skillsru": "./src/index.js"
+    "skillsbd": "./src/index.js"
   },
   "type": "module",
   "keywords": [

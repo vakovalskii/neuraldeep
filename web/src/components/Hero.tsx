@@ -37,7 +37,7 @@ export default function Hero() {
       <div className="flex items-center gap-2 rounded-lg border border-gray-800 bg-gray-900 px-4 py-3 font-mono text-sm w-fit">
         <span className="text-gray-500">$</span>
         <span className="text-foreground">
-          npx skillsru add <span className="text-gray-500">&lt;owner/repo&gt;</span>
+          npx skillsbd add <span className="text-gray-500">&lt;owner/repo&gt;</span>
         </span>
       </div>
 
