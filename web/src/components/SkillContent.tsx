@@ -22,7 +22,9 @@ export default function SkillContent({ skillId }: { skillId: string }) {
   if (loading) return <div className="h-20 animate-pulse rounded-lg bg-gray-900" />;
   if (!content) return null;
 
-  const cleaned = content.replace(/^---[\s\S]*?---\s*/m, "").trim();
+  // Remove frontmatter, fix tables (ensure blank line before pipe tables)
+  let cleaned = content.replace(/^---[\s\S]*?---\s*/m, "").trim();
+  cleaned = cleaned.replace(/([^\n])\n(\|[^\n]*\|[^\n]*\n\|[-| :]+\|)/g, "$1\n\n$2");
   const isLong = cleaned.length > 800;
 
   return (
