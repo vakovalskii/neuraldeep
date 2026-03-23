@@ -12,9 +12,24 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
   const { id } = await params;
   const skill = await prisma.skill.findUnique({ where: { id } });
   if (!skill) return { title: "Навык не найден" };
+
+  const title = `${skill.name} — навык для AI-агентов`;
+  const description = `${skill.description}. Автор: ${skill.authorName || skill.owner}. ★${skill.githubStars} | ${skill.installs} установок. Установить: npx skillsbd add ${skill.owner}/${skill.repo}/${skill.name}`;
+
   return {
-    title: skill.name,
-    description: skill.description,
+    title,
+    description,
+    openGraph: {
+      title,
+      description: skill.description,
+      url: `https://skillsbd.ru/skill/${skill.id}`,
+      type: "article",
+    },
+    twitter: {
+      card: "summary",
+      title,
+      description: skill.description,
+    },
   };
 }
 
@@ -35,7 +50,7 @@ export default async function SkillPage({ params }: { params: Promise<{ id: stri
             </span>
             {skill.featured && (
               <span className="rounded-md bg-accent/15 px-2 py-0.5 text-xs font-medium text-accent">
-                рекомендован
+                выбор редакции
               </span>
             )}
           </div>

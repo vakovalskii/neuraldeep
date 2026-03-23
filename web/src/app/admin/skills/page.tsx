@@ -40,6 +40,15 @@ export default function AdminSkillsPage() {
     setSkills((prev) => prev.filter((s) => s.id !== id));
   }
 
+  async function toggleFeatured(id: string, current: boolean) {
+    await fetch("/api/admin/skills", {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ skillId: id, featured: !current }),
+    });
+    setSkills((prev) => prev.map((s) => s.id === id ? { ...s, featured: !current } : s));
+  }
+
   const sorted = [...skills].sort((a, b) => {
     if (sort === "installs") return b.installs - a.installs;
     if (sort === "stars") return b.githubStars - a.githubStars;
@@ -87,10 +96,20 @@ export default function AdminSkillsPage() {
               <span className="text-xs text-gray-500 font-mono shrink-0">↓{skill.installs}</span>
               <span className="text-xs text-gray-600 shrink-0">{skill._count.comments} комм.</span>
               <button
+                onClick={() => toggleFeatured(skill.id, skill.featured)}
+                className={`shrink-0 rounded border px-2 py-1 text-xs transition-colors ${
+                  skill.featured
+                    ? "border-accent/50 text-accent hover:bg-accent/10"
+                    : "border-gray-800 text-gray-600 hover:text-gray-400"
+                }`}
+              >
+                {skill.featured ? "★ Ред." : "☆"}
+              </button>
+              <button
                 onClick={() => handleDelete(skill.id, skill.name)}
                 className="shrink-0 rounded border border-red-800/50 px-2 py-1 text-xs text-red-400 hover:bg-red-900/30 transition-colors"
               >
-                Удалить
+                ✕
               </button>
             </div>
           ))}

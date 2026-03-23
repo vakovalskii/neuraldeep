@@ -168,7 +168,7 @@ export default function Leaderboard({
                 {skill.name}
                 {skill.featured && (
                   <span className="shrink-0 rounded bg-accent/15 px-1.5 py-0.5 text-[10px] font-medium text-accent">
-                    рекомендован
+                    выбор редакции
                   </span>
                 )}
               </span>

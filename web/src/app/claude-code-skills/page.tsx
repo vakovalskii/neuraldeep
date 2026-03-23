@@ -64,7 +64,7 @@ export default async function ClaudeCodeSkillsPage() {
                 <span className="font-medium">{skill.name}</span>
                 {skill.featured && (
                   <span className="ml-2 rounded bg-accent/15 px-1.5 py-0.5 text-[10px] text-accent">
-                    рекомендован
+                    выбор редакции
                   </span>
                 )}
                 <p className="text-sm text-gray-500 mt-1">{skill.description}</p>

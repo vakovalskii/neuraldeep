@@ -9,7 +9,7 @@ const ADMIN_USER_ID = "cmn2pemwd0000rv01qkeco1nb";
 
 const navLinks = [
   { href: "/new", label: "Новые", dot: true },
-  { href: "/official", label: "Официальные" },
+  { href: "/official", label: "Выбор редакции" },
   { href: "/docs", label: "Документация" },
   { href: "/submit", label: "Добавить" },
 ];

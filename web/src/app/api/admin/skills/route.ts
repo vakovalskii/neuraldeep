@@ -22,3 +22,19 @@ export async function DELETE(request: NextRequest) {
   await prisma.skill.delete({ where: { id: skillId } });
   return NextResponse.json({ deleted: true });
 }
+
+export async function PATCH(request: NextRequest) {
+  if (!(await isAdmin())) return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+
+  const { skillId, featured } = await request.json();
+  if (!skillId || typeof featured !== "boolean") {
+    return NextResponse.json({ error: "skillId and featured required" }, { status: 400 });
+  }
+
+  const skill = await prisma.skill.update({
+    where: { id: skillId },
+    data: { featured },
+  });
+
+  return NextResponse.json(skill);
+}

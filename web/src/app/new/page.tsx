@@ -41,7 +41,7 @@ export default async function NewSkillsPage() {
                     <span className="font-medium truncate">{skill.name}</span>
                     {skill.featured && (
                       <span className="shrink-0 rounded bg-accent/15 px-1.5 py-0.5 text-[10px] text-accent">
-                        рекомендован
+                        выбор редакции
                       </span>
                     )}
                     <span className="shrink-0 rounded bg-green-900/30 border border-green-800/50 px-1.5 py-0.5 text-[10px] text-green-400">
