@@ -5,7 +5,7 @@ import { existsSync, mkdirSync, writeFileSync, readFileSync } from "fs";
 import { join, resolve } from "path";
 import { get } from "https";
 
-const VERSION = "0.3.0";
+const VERSION = "0.3.1";
 const API_URL = "https://skillsbd.ru/api/skills";
 const INSTALL_URL = "https://skillsbd.ru/api/skills/install";
 
@@ -146,7 +146,7 @@ function trackInstall(name, owner, repo) {
   fetch(INSTALL_URL, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ name, owner, repo }),
+    body: JSON.stringify({ name, owner, repo, v: VERSION }),
   }).catch(() => {});
 }
 
