@@ -3,8 +3,10 @@
 import { execSync } from "child_process";
 import { existsSync, mkdirSync, writeFileSync, readFileSync } from "fs";
 import { join, resolve } from "path";
+import { get } from "https";
 
 const VERSION = "0.1.0";
+const API_URL = "https://skillsbd.ru/api/skills";
 
 const HELP = `
   skillsru - CLI для установки навыков AI-агентов
@@ -23,6 +25,8 @@ const HELP = `
     npx skillsru add skillsru/agent-skills/react-best-practices
     npx skillsru search react
     npx skillsru list
+
+  Каталог: https://skillsbd.ru
 `;
 
 const AGENTS_DIR = ".skills";
@@ -189,40 +193,58 @@ function removeSkill(name) {
   success(`Удален: ${name}`);
 }
 
-function searchSkills(query) {
+function fetchJSON(url) {
+  return new Promise((resolve, reject) => {
+    get(url, (res) => {
+      let data = "";
+      res.on("data", (chunk) => (data += chunk));
+      res.on("end", () => {
+        try {
+          resolve(JSON.parse(data));
+        } catch {
+          reject(new Error("Не удалось разобрать ответ сервера"));
+        }
+      });
+    }).on("error", reject);
+  });
+}
+
+function formatInstalls(n) {
+  if (n >= 1000000) return (n / 1000000).toFixed(1) + "M";
+  if (n >= 1000) return (n / 1000).toFixed(1) + "K";
+  return String(n);
+}
+
+async function searchSkills(query) {
   if (!query) {
     error("Укажите запрос: npx skillsru search <запрос>");
     process.exit(1);
   }
 
-  log(`Поиск "${query}" в каталоге Skills.RU...`);
-  log("(в прототипе поиск работает по локальным данным)");
+  log(`Поиск "${query}" в каталоге skillsbd...`);
   console.log();
 
-  // Mock search results
-  const results = [
-    { name: "react-best-practices", owner: "skillsru/agent-skills", installs: "156.2K" },
-    { name: "frontend-design", owner: "community/skills", installs: "98.7K" },
-    { name: "nextjs-app-router", owner: "skillsru/agent-skills", installs: "87.4K" },
-    { name: "typescript-patterns", owner: "community/ts-skills", installs: "76.5K" },
-    { name: "tailwind-mastery", owner: "skillsru/agent-skills", installs: "65.3K" },
-  ];
+  try {
+    const results = await fetchJSON(`${API_URL}?q=${encodeURIComponent(query)}`);
 
-  const q = query.toLowerCase();
-  const matched = results.filter(
-    (r) => r.name.includes(q) || r.owner.includes(q)
-  );
+    if (!results || results.length === 0) {
+      log("Ничего не найдено. Попробуйте другой запрос.");
+      log(`Каталог: https://skillsbd.ru`);
+      return;
+    }
 
-  if (matched.length === 0) {
-    log("Ничего не найдено. Попробуйте другой запрос.");
-    return;
+    for (const r of results) {
+      const author = r.authorName ? `  \x1b[33m${r.authorName}\x1b[0m` : "";
+      console.log(
+        `  \x1b[36m${r.name}\x1b[0m  \x1b[90m${r.owner}/${r.repo}\x1b[0m  ${formatInstalls(r.installs)} установок${author}`
+      );
+    }
+    console.log();
+    log(`Установка: npx skillsru add <owner/repo>`);
+  } catch {
+    log("Не удалось подключиться к каталогу. Проверьте подключение к сети.");
+    log(`Каталог: https://skillsbd.ru`);
   }
-
-  for (const r of matched) {
-    console.log(`  \x1b[36m${r.name}\x1b[0m  \x1b[90m${r.owner}\x1b[0m  ${r.installs} установок`);
-  }
-  console.log();
-  log(`Установка: npx skillsru add <owner/repo>`);
 }
 
 // Main
@@ -240,13 +262,7 @@ if (command === "--version" || command === "-v") {
 }
 
 console.log();
-console.log("  \x1b[36m███████╗██╗  ██╗██╗██╗     ██╗     ███████╗\x1b[0m");
-console.log("  \x1b[36m██╔════╝██║ ██╔╝██║██║     ██║     ██╔════╝\x1b[0m");
-console.log("  \x1b[36m███████╗█████╔╝ ██║██║     ██║     ███████╗\x1b[0m");
-console.log("  \x1b[36m╚════██║██╔═██╗ ██║██║     ██║     ╚════██║\x1b[0m");
-console.log("  \x1b[36m███████║██║  ██╗██║███████╗███████╗███████║\x1b[0m");
-console.log("  \x1b[36m╚══════╝╚═╝  ╚═╝╚═╝╚══════╝╚══════╝╚══════╝\x1b[0m");
-console.log("  \x1b[90mSkills.RU — навыки для AI-агентов\x1b[0m\n");
+console.log("  \x1b[36mskillsbd\x1b[0m \x1b[90m— навыки для AI-агентов\x1b[0m\n");
 
 switch (command) {
   case "add":
@@ -264,7 +280,7 @@ switch (command) {
     break;
   case "search":
   case "find":
-    searchSkills(args.slice(1).join(" "));
+    await searchSkills(args.slice(1).join(" "));
     break;
   default:
     error(`Неизвестная команда: ${command}`);

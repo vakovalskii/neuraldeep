@@ -1,7 +1,7 @@
 {
   "name": "skillsru",
   "version": "0.1.0",
-  "description": "CLI для установки AI-агент навыков из каталога Skills.RU",
+  "description": "CLI для установки навыков AI-агентов из каталога skillsbd",
   "bin": {
     "skillsru": "./src/index.js"
   },
@@ -11,8 +11,26 @@
     "agent",
     "skills",
     "claude",
+    "claude-code",
     "cursor",
-    "copilot"
+    "copilot",
+    "windsurf",
+    "cline",
+    "codex",
+    "skillsbd",
+    "ai-agents"
   ],
-  "license": "MIT"
+  "author": "vakovalskii",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vakovalskii/skillsbd"
+  },
+  "homepage": "https://skillsbd.ru",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  },
+  "files": [
+    "src/"
+  ]
 }

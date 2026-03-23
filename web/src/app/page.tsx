@@ -29,8 +29,42 @@ export default async function Home() {
           </section>
         </div>
       </main>
-      <footer className="border-t border-gray-800 py-6 text-center text-xs text-gray-600">
-        skillsbd — открытый каталог навыков для AI-агентов
+      <footer className="border-t border-gray-800 py-8 px-4">
+        <div className="mx-auto max-w-6xl grid grid-cols-2 sm:grid-cols-4 gap-6 text-sm">
+          <div>
+            <h4 className="font-medium text-foreground mb-3">Каталог</h4>
+            <ul className="space-y-2 text-gray-500">
+              <li><a href="/official" className="hover:text-foreground transition-colors">Официальные навыки</a></li>
+              <li><a href="/submit" className="hover:text-foreground transition-colors">Добавить навык</a></li>
+              <li><a href="/docs" className="hover:text-foreground transition-colors">Документация</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4 className="font-medium text-foreground mb-3">О проекте</h4>
+            <ul className="space-y-2 text-gray-500">
+              <li><a href="/about" className="hover:text-foreground transition-colors">О skillsbd</a></li>
+              <li><a href="/blog" className="hover:text-foreground transition-colors">Блог</a></li>
+              <li><a href="/changelog" className="hover:text-foreground transition-colors">Обновления</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4 className="font-medium text-foreground mb-3">Сообщество</h4>
+            <ul className="space-y-2 text-gray-500">
+              <li><a href="https://github.com/vakovalskii/skillsbd" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors">GitHub</a></li>
+              <li><a href="https://t.me/skillsbd" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors">Telegram</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4 className="font-medium text-foreground mb-3">Правовая информация</h4>
+            <ul className="space-y-2 text-gray-500">
+              <li><a href="/privacy" className="hover:text-foreground transition-colors">Конфиденциальность</a></li>
+              <li><a href="/terms" className="hover:text-foreground transition-colors">Условия использования</a></li>
+            </ul>
+          </div>
+        </div>
+        <div className="mx-auto max-w-6xl mt-8 pt-6 border-t border-gray-800 text-center text-xs text-gray-600">
+          skillsbd — открытый каталог навыков для AI-агентов
+        </div>
       </footer>
     </>
   );
