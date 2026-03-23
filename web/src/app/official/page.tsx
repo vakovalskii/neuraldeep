@@ -31,9 +31,10 @@ export default async function OfficialPage() {
         ) : (
           <div className="grid gap-4">
             {skills.map((skill) => (
-              <div
+              <a
                 key={skill.id}
-                className="rounded-lg border border-gray-800 bg-gray-900 p-4 hover:border-gray-700 transition-colors"
+                href={`/skill/${skill.id}`}
+                className="block rounded-lg border border-gray-800 bg-gray-900 p-4 hover:border-gray-700 transition-colors"
               >
                 <div className="flex items-start justify-between">
                   <div>
@@ -45,7 +46,7 @@ export default async function OfficialPage() {
                     </div>
                   </div>
                 </div>
-              </div>
+              </a>
             ))}
           </div>
         )}

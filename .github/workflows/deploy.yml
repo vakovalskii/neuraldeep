@@ -34,6 +34,7 @@ jobs:
           host: 62.84.116.76
           username: ubuntu
           key: ${{ secrets.SSH_PRIVATE_KEY }}
+          command_timeout: 10m
           script: |
             set -e
             cd /opt/skillsbd
@@ -43,6 +44,8 @@ jobs:
               exit 1
             fi
 
-            docker compose up -d --build --remove-orphans
+            # Build with cache (не с нуля каждый раз)
+            DOCKER_BUILDKIT=1 docker compose build --parallel
+            docker compose up -d --remove-orphans
             docker image prune -f
             echo "Deploy complete!"
