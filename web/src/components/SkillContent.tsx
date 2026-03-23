@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Markdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 export default function SkillContent({ skillId }: { skillId: string }) {
   const [content, setContent] = useState<string | null>(null);
@@ -34,6 +35,7 @@ export default function SkillContent({ skillId }: { skillId: string }) {
           }`}
         >
           <Markdown
+            remarkPlugins={[remarkGfm]}
             components={{
               h1: ({ children }) => <h1 className="text-xl font-bold text-foreground mt-5 mb-3 first:mt-0">{children}</h1>,
               h2: ({ children }) => <h2 className="text-lg font-semibold text-foreground mt-5 mb-2">{children}</h2>,

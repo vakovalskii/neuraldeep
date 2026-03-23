@@ -3,18 +3,30 @@ import AuditBadges from "@/components/AuditBadges";
 import SkillContent from "@/components/SkillContent";
 import Comments from "@/components/Comments";
 import { prisma } from "@/lib/db";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { formatInstalls } from "@/data/skills";
 
 export const dynamic = "force-dynamic";
 
-export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
-  const { id } = await params;
-  const skill = await prisma.skill.findUnique({ where: { id } });
+async function findSkill(slug: string) {
+  // Try by name first (new slug URLs)
+  let skill = await prisma.skill.findFirst({ where: { name: slug, status: "approved" } });
+  if (skill) return skill;
+
+  // Fallback: try by id (old URLs) and redirect
+  skill = await prisma.skill.findUnique({ where: { id: slug } });
+  if (skill) redirect(`/skill/${skill.name}`);
+
+  return null;
+}
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const skill = await findSkill(slug);
   if (!skill) return { title: "Навык не найден" };
 
-  const title = `${skill.name} — навык для AI-агентов`;
-  const description = `${skill.description}. Автор: ${skill.authorName || skill.owner}. ★${skill.githubStars} | ${skill.installs} установок. Установить: npx skillsbd add ${skill.owner}/${skill.repo}/${skill.name}`;
+  const title = `${skill.name} — навык для AI-агентов | skillsbd`;
+  const description = `${skill.description}. Автор: ${skill.authorName || skill.owner}. ★${skill.githubStars} | ${skill.installs} установок.`;
 
   return {
     title,
@@ -22,7 +34,7 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
     openGraph: {
       title,
       description: skill.description,
-      url: `https://skillsbd.ru/skill/${skill.id}`,
+      url: `https://skillsbd.ru/skill/${skill.name}`,
       type: "article",
     },
     twitter: {
@@ -33,9 +45,9 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
   };
 }
 
-export default async function SkillPage({ params }: { params: Promise<{ id: string }> }) {
-  const { id } = await params;
-  const skill = await prisma.skill.findUnique({ where: { id } });
+export default async function SkillPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const skill = await findSkill(slug);
   if (!skill) notFound();
 
   return (
@@ -43,7 +55,7 @@ export default async function SkillPage({ params }: { params: Promise<{ id: stri
       <Header />
       <main className="mx-auto w-full max-w-3xl flex-1 px-4 py-12">
         <div className="mb-8">
-          <div className="flex items-center gap-3 mb-3">
+          <div className="flex items-center flex-wrap gap-3 mb-3">
             <h1 className="text-3xl font-bold">{skill.name}</h1>
             <span className="rounded-md bg-gray-900 border border-gray-800 px-2 py-0.5 text-xs text-gray-400">
               {skill.category}
@@ -60,7 +72,6 @@ export default async function SkillPage({ params }: { params: Promise<{ id: stri
           </p>
         </div>
 
-        {/* Stats */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
           <div className="rounded-lg border border-gray-800 bg-gray-900 p-4">
             <p className="text-2xl font-bold">{formatInstalls(skill.installs)}</p>
@@ -86,10 +97,8 @@ export default async function SkillPage({ params }: { params: Promise<{ id: stri
           )}
         </div>
 
-        {/* SKILL.md content */}
         <SkillContent skillId={skill.id} />
 
-        {/* Install */}
         <div className="mb-8">
           <h2 className="text-lg font-semibold mb-3">Установка</h2>
           <div className="rounded-lg border border-gray-800 bg-gray-900 px-4 py-3 font-mono text-sm overflow-x-auto whitespace-nowrap mb-3">
@@ -111,7 +120,6 @@ export default async function SkillPage({ params }: { params: Promise<{ id: stri
           </div>
         </div>
 
-        {/* Author info */}
         {skill.authorName && (
           <div className="mb-8">
             <h2 className="text-lg font-semibold mb-3">Автор</h2>
@@ -131,12 +139,10 @@ export default async function SkillPage({ params }: { params: Promise<{ id: stri
           </div>
         )}
 
-        {/* Audit */}
         <div className="mb-8">
           <AuditBadges skillId={skill.id} />
         </div>
 
-        {/* Tags */}
         {skill.tags.length > 0 && (
           <div className="mb-8">
             <h2 className="text-lg font-semibold mb-3">Теги</h2>
@@ -153,10 +159,8 @@ export default async function SkillPage({ params }: { params: Promise<{ id: stri
           </div>
         )}
 
-        {/* Comments */}
         <Comments skillId={skill.id} />
 
-        {/* Source */}
         <div>
           <h2 className="text-lg font-semibold mb-3">Исходный код</h2>
           <a

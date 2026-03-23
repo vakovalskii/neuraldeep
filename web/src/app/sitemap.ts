@@ -7,7 +7,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = "https://skillsbd.ru";
 
   const skills = await prisma.skill.findMany({
-    select: { id: true, updatedAt: true },
+    select: { name: true, updatedAt: true },
+    where: { status: "approved" },
   });
 
   const staticPages = [
@@ -27,7 +28,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   ];
 
   const skillPages = skills.map((skill) => ({
-    url: `${baseUrl}/skill/${skill.id}`,
+    url: `${baseUrl}/skill/${skill.name}`,
     lastModified: skill.updatedAt,
     changeFrequency: "weekly" as const,
     priority: 0.8,
