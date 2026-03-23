@@ -1,5 +1,6 @@
 import Header from "@/components/Header";
 import AuditBadges from "@/components/AuditBadges";
+import SkillContent from "@/components/SkillContent";
 import { prisma } from "@/lib/db";
 import { notFound } from "next/navigation";
 import { formatInstalls } from "@/data/skills";
@@ -59,6 +60,9 @@ export default async function SkillPage({ params }: { params: Promise<{ id: stri
             <p className="text-xs text-gray-500 mt-1">репозиторий</p>
           </div>
         </div>
+
+        {/* SKILL.md content */}
+        <SkillContent skillId={skill.id} />
 
         {/* Install */}
         <div className="mb-8">

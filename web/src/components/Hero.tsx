@@ -26,12 +26,12 @@ export default function Hero() {
       </div>
 
       <p className="font-mono text-xs uppercase tracking-widest text-gray-500">
-        Открытый каталог навыков для AI-агентов
+        Российский каталог навыков для AI-агентов
       </p>
 
       <p className="max-w-md text-[15px] leading-relaxed text-gray-400 lg:text-base">
-        Навыки — это переиспользуемые возможности для AI-агентов. Установите
-        их одной командой, чтобы расширить знания ваших агентов.
+        Навыки для работы с Яндекс, Битрикс, 1С и другими российскими сервисами.
+        Устанавливайте одной командой, делитесь с RU-комьюнити.
       </p>
 
       <div className="flex items-center gap-2 rounded-lg border border-gray-800 bg-gray-900 px-4 py-3 font-mono text-sm w-fit">

@@ -13,9 +13,9 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const title = "skillsbd — каталог навыков для AI-агентов";
+const title = "skillsbd — российский каталог навыков для AI-агентов";
 const description =
-  "Открытый каталог переиспользуемых навыков для Claude Code, Cursor, Copilot и других AI-агентов. Находите, устанавливайте и делитесь навыками.";
+  "Навыки для работы с Яндекс, Битрикс, 1С и другими российскими сервисами. Открытый каталог для Claude Code, Cursor, Copilot и других AI-агентов. RU-комьюнити.";
 const url = "https://skillsbd.ru";
 
 export const metadata: Metadata = {
@@ -37,6 +37,11 @@ export const metadata: Metadata = {
     "skills",
     "каталог навыков",
     "skillsbd",
+    "Яндекс",
+    "Битрикс",
+    "1С",
+    "российские сервисы",
+    "RU комьюнити",
   ],
   authors: [{ name: "skillsbd" }],
   creator: "skillsbd",
