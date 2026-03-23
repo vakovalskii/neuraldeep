@@ -24,21 +24,25 @@ describe("getSkills", () => {
   it("queries approved skills sorted by installs by default", async () => {
     prisma.skill.findMany.mockResolvedValue([]);
     await getSkills();
-    expect(prisma.skill.findMany).toHaveBeenCalledWith({
-      where: { status: "approved" },
-      orderBy: { installs: "desc" },
-      take: 100,
-    });
+    expect(prisma.skill.findMany).toHaveBeenCalledWith(
+      expect.objectContaining({
+        where: { status: "approved" },
+        orderBy: { installs: "desc" },
+        take: 100,
+      })
+    );
   });
 
   it("sorts by trending when requested", async () => {
     prisma.skill.findMany.mockResolvedValue([]);
     await getSkills("trending");
-    expect(prisma.skill.findMany).toHaveBeenCalledWith({
-      where: { status: "approved" },
-      orderBy: { trending24h: "desc" },
-      take: 100,
-    });
+    expect(prisma.skill.findMany).toHaveBeenCalledWith(
+      expect.objectContaining({
+        where: { status: "approved" },
+        orderBy: { trending24h: "desc" },
+        take: 100,
+      })
+    );
   });
 });
 

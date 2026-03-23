@@ -14,6 +14,7 @@ export interface Skill {
   telegramLink: string | null;
   featured: boolean;
   githubStars: number;
+  _count?: { comments: number };
 }
 
 export async function getSkills(sort: "all" | "trending" = "all"): Promise<Skill[]> {
@@ -22,7 +23,12 @@ export async function getSkills(sort: "all" | "trending" = "all"): Promise<Skill
       ? { trending24h: "desc" as const }
       : { installs: "desc" as const };
 
-  return prisma.skill.findMany({ where: { status: "approved" }, orderBy, take: 100 });
+  return prisma.skill.findMany({
+    where: { status: "approved" },
+    orderBy,
+    take: 100,
+    include: { _count: { select: { comments: true } } },
+  });
 }
 
 export async function getTotalInstalls(): Promise<number> {
