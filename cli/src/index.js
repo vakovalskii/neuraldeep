@@ -5,7 +5,7 @@ import { existsSync, mkdirSync, writeFileSync, readFileSync } from "fs";
 import { join, resolve } from "path";
 import { get } from "https";
 
-const VERSION = "0.3.1";
+const VERSION = "0.4.0";
 const API_URL = "https://skillsbd.ru/api/skills";
 const INSTALL_URL = "https://skillsbd.ru/api/skills/install";
 
@@ -80,9 +80,19 @@ function cloneSkill(ownerRepo, skillName) {
     process.exit(1);
   }
 
-  // Look for SKILL.md files
-  const skillsPath = join(tempDir, "skills");
-  if (!existsSync(skillsPath)) {
+  // Look for skills in multiple locations
+  const searchDirs = ["skills", "plugins", ".claude/skills"];
+  let skillsPath = null;
+
+  for (const dir of searchDirs) {
+    const candidate = join(tempDir, dir);
+    if (existsSync(candidate)) {
+      skillsPath = candidate;
+      break;
+    }
+  }
+
+  if (!skillsPath) {
     // Try root-level SKILL.md
     const rootSkill = join(tempDir, "SKILL.md");
     if (existsSync(rootSkill)) {
@@ -93,31 +103,36 @@ function cloneSkill(ownerRepo, skillName) {
       success(`Установлен навык: ${repo}`);
       trackInstall(repo, owner, repo);
     } else {
-      error("Навыки не найдены в репозитории (нет директории skills/ или SKILL.md)");
+      error("Навыки не найдены (нет skills/, plugins/, .claude/skills/ или SKILL.md)");
     }
     cleanup(tempDir);
     return;
   }
 
-  // Install specific or all skills
+  // Install specific or all skills from found directory
   try {
     const entries = execSync(`ls "${skillsPath}"`, { encoding: "utf-8" })
       .trim()
       .split("\n")
-      .filter(Boolean);
+      .filter((e) => e && !e.startsWith("."));
 
     let installed = 0;
 
     for (const entry of entries) {
       if (skill && entry !== skill) continue;
 
-      const skillMd = join(skillsPath, entry, "SKILL.md");
-      if (existsSync(skillMd)) {
+      // Look for SKILL.md in entry itself or in entry/skills/<entry>/
+      const paths = [
+        join(skillsPath, entry, "SKILL.md"),
+        join(skillsPath, entry, "skills", entry, "SKILL.md"),
+      ];
+
+      const foundPath = paths.find((p) => existsSync(p));
+      if (foundPath) {
+        const sourceDir = join(foundPath, "..");
         const destDir = join(skillsDir, entry);
         mkdirSync(destDir, { recursive: true });
-
-        // Copy all files from skill directory
-        execSync(`cp -r "${join(skillsPath, entry)}/." "${destDir}/"`);
+        execSync(`cp -r "${sourceDir}/." "${destDir}/"`);
         success(`Установлен: ${entry}`);
         trackInstall(entry, owner, repo);
         installed++;

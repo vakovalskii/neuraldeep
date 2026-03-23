@@ -17,6 +17,7 @@ model User {
   updatedAt     DateTime  @updatedAt
   skills        Skill[]
   accounts      Account[]
+  comments      Comment[]
 }
 
 model Account {
@@ -59,6 +60,7 @@ model Skill {
   author       User?    @relation(fields: [authorId], references: [id])
 
   audits       Audit[]
+  comments     Comment[]
 
   @@index([category])
   @@index([installs])
@@ -74,5 +76,17 @@ model Audit {
   skill     Skill    @relation(fields: [skillId], references: [id], onDelete: Cascade)
 
   @@unique([skillId, checkName])
+  @@index([skillId])
+}
+
+model Comment {
+  id        String   @id @default(cuid())
+  skillId   String
+  userId    String
+  text      String
+  createdAt DateTime @default(now())
+  skill     Skill    @relation(fields: [skillId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
   @@index([skillId])
 }
