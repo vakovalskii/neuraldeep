@@ -278,10 +278,13 @@ export default function McpGrid() {
             rel="noopener noreferrer"
             className="flex flex-col rounded-lg border border-gray-800 bg-gray-900 p-4 hover:border-gray-700 hover-glow card-shine transition-all group"
           >
-            <div className="flex items-center gap-2 mb-2">
+            <div className="flex items-center gap-2 mb-2 flex-wrap">
               <h3 className="font-semibold text-foreground group-hover:text-accent transition-colors">
                 {server.name}
               </h3>
+              {server.category === "Российские" && (
+                <span className="rounded bg-red-900/30 border border-red-800/40 px-1.5 py-0.5 text-[10px] font-bold text-red-400">RU</span>
+              )}
               {server.stars > 0 && (
                 <span className="text-xs text-yellow-500/70 font-mono">★{server.stars}</span>
               )}

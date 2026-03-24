@@ -166,6 +166,9 @@ export default function Leaderboard({
             <div className="flex flex-col gap-0.5 min-w-0">
               <span className="text-sm font-medium text-foreground truncate flex items-center gap-1.5">
                 {skill.name}
+                {skill.tags.some((t) => ["яндекс", "1с", "1c", "битрикс24", "gigachat", "сбер", "российские сервисы"].includes(t.toLowerCase())) && (
+                  <span className="shrink-0 rounded bg-red-900/30 border border-red-800/40 px-1 py-0.5 text-[9px] font-bold text-red-400">RU</span>
+                )}
                 {skill.featured && (
                   <span className="shrink-0 rounded bg-accent/15 px-1.5 py-0.5 text-[10px] font-medium text-accent">
                     выбор редакции

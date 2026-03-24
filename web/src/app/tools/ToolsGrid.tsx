@@ -11,6 +11,7 @@ interface Tool {
   lang: string;
   url: string;
   install: string;
+  ru?: boolean;
   category: string;
   tags: string[];
 }
@@ -37,6 +38,7 @@ const tools: Tool[] = [
     lang: "JavaScript",
     url: "https://github.com/vakovalskii/skillsbd",
     install: "npx skillsbd --help",
+    ru: true,
     category: "Управление навыками",
     tags: ["skillsbd", "навыки", "установка", "каталог"],
   },
@@ -49,6 +51,7 @@ const tools: Tool[] = [
     lang: "JavaScript",
     url: "https://github.com/vakovalskii/skillsbd/tree/main/create-skillsbd",
     install: "npx create-skillsbd my-company-skills",
+    ru: true,
     category: "Управление навыками",
     tags: ["генератор", "корпоративный", "npm", "библиотека"],
   },
@@ -328,10 +331,13 @@ export default function ToolsGrid() {
             rel="noopener noreferrer"
             className="flex flex-col rounded-lg border border-gray-800 bg-gray-900 p-4 hover:border-gray-700 hover-glow card-shine transition-all group"
           >
-            <div className="flex items-center gap-2 mb-2">
+            <div className="flex items-center gap-2 mb-2 flex-wrap">
               <h3 className="font-semibold text-foreground group-hover:text-accent transition-colors">
                 {tool.name}
               </h3>
+              {tool.ru && (
+                <span className="rounded bg-red-900/30 border border-red-800/40 px-1.5 py-0.5 text-[10px] font-bold text-red-400">RU</span>
+              )}
               {tool.stars > 0 && (
                 <span className="text-xs text-yellow-500/70 font-mono">★{tool.stars}</span>
               )}
