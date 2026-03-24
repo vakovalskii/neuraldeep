@@ -258,9 +258,15 @@ export default function ToolsGrid() {
     return Array.from(cats).sort();
   }, []);
 
+  const ruCount = tools.filter((t) => t.ru).length;
+
   const filtered = useMemo(() => {
     let list = tools;
-    if (activeCategory) list = list.filter((t) => t.category === activeCategory);
+    if (activeCategory === "__ru__") {
+      list = list.filter((t) => t.ru);
+    } else if (activeCategory) {
+      list = list.filter((t) => t.category === activeCategory);
+    }
     if (search) {
       const q = search.toLowerCase();
       list = list.filter(
@@ -303,6 +309,18 @@ export default function ToolsGrid() {
         >
           Все ({tools.length})
         </button>
+        {ruCount > 0 && (
+          <button
+            onClick={() => setActiveCategory(activeCategory === "__ru__" ? "" : "__ru__")}
+            className={`rounded-md px-2.5 py-1 text-xs transition-colors ${
+              activeCategory === "__ru__"
+                ? "bg-red-900/30 text-red-400 border border-red-800/40"
+                : "border border-gray-800 text-gray-500 hover:text-gray-400"
+            }`}
+          >
+            Российские ({ruCount})
+          </button>
+        )}
         {categories.map((cat) => {
           const count = tools.filter((t) => t.category === cat).length;
           return (
