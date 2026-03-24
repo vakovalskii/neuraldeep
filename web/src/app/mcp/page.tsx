@@ -1,0 +1,34 @@
+import Header from "@/components/Header";
+import McpGrid from "./McpGrid";
+
+export const metadata = {
+  title: "MCP серверы для AI-агентов",
+  description:
+    "Open source MCP серверы: подключите AI-агента к базам данных, API, файловым системам и внешним сервисам через Model Context Protocol.",
+  keywords: [
+    "mcp server",
+    "model context protocol",
+    "claude mcp",
+    "mcp tools",
+    "mcp российские",
+  ],
+};
+
+export default function McpPage() {
+  return (
+    <>
+      <Header />
+      <main className="mx-auto w-full max-w-5xl flex-1 px-4 py-12">
+        <div className="flex items-baseline gap-3 mb-2">
+          <h1 className="text-3xl font-bold">MCP серверы</h1>
+          <span className="rounded bg-accent/10 px-2 py-0.5 text-xs font-medium text-accent">Model Context Protocol</span>
+        </div>
+        <p className="text-gray-400 text-lg mb-8 max-w-2xl">
+          MCP серверы дают агентам доступ к данным и инструментам: базы данных,
+          API, файловые системы, браузеры и другие ресурсы.
+        </p>
+        <McpGrid />
+      </main>
+    </>
+  );
+}

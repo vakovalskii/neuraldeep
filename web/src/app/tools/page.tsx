@@ -2,16 +2,16 @@ import Header from "@/components/Header";
 import ToolsGrid from "./ToolsGrid";
 
 export const metadata = {
-  title: "CLI инструменты для AI-агентов",
+  title: "Экосистема — Skills, MCP серверы, CLI инструменты",
   description:
-    "Инструменты для работы с AI-агентами: openapi-to-cli, skillsbd CLI, create-skillsbd, MCP серверы и другие.",
+    "Три слоя для AI-агентов: Skills (знания), MCP серверы (данные), CLI (действия). Open source каталог.",
   keywords: [
-    "cli tools",
-    "openapi-to-cli",
-    "skillsbd",
-    "ai agents tools",
-    "cli для агентов",
+    "skills",
     "mcp server",
+    "cli tools",
+    "ai agents",
+    "open source",
+    "skillsbd",
   ],
 };
 
@@ -20,10 +20,10 @@ export default function ToolsPage() {
     <>
       <Header />
       <main className="mx-auto w-full max-w-5xl flex-1 px-4 py-12">
-        <h1 className="text-3xl font-bold mb-2">CLI инструменты</h1>
+        <h1 className="text-3xl font-bold mb-2">Экосистема</h1>
         <p className="text-gray-400 text-lg mb-8 max-w-2xl">
-          Инструменты, которые делают AI-агентов полезнее.
-          Навыки дают знания, инструменты дают действия.
+          Три слоя для AI-агентов: навыки дают знания, MCP серверы — доступ к данным,
+          CLI инструменты — действия.
         </p>
         <ToolsGrid />
       </main>
