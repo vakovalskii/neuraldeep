@@ -253,13 +253,14 @@ export default function McpGrid() {
         </button>
         {categories.map((cat) => {
           const count = servers.filter((s) => s.category === cat).length;
+          const isRu = cat === "Российские";
           return (
             <button
               key={cat}
               onClick={() => setActiveCategory(cat === activeCategory ? "" : cat)}
               className={`rounded-md px-2.5 py-1 text-xs transition-colors ${
                 activeCategory === cat
-                  ? "bg-accent/15 text-accent border border-accent/30"
+                  ? isRu ? "bg-red-900/30 text-red-400 border border-red-800/40" : "bg-accent/15 text-accent border border-accent/30"
                   : "border border-gray-800 text-gray-500 hover:text-gray-400"
               }`}
             >

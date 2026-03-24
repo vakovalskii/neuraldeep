@@ -36,16 +36,23 @@ export default function Leaderboard({
     return () => document.removeEventListener("keydown", handleKey);
   }, []);
 
+  const RU_TAGS = ["яндекс", "1с", "1c", "битрикс24", "gigachat", "сбер", "российские сервисы"];
+  const isRuSkill = (s: Skill) => s.tags.some((t) => RU_TAGS.includes(t.toLowerCase()));
+
   // Unique categories from skills
   const categories = useMemo(() => {
     const cats = new Set(initialSkills.map((s) => s.category));
     return Array.from(cats).sort();
   }, [initialSkills]);
 
+  const ruCount = useMemo(() => initialSkills.filter(isRuSkill).length, [initialSkills]);
+
   const filtered = useMemo(() => {
     let list = [...initialSkills];
 
-    if (categoryFilter) {
+    if (categoryFilter === "__ru__") {
+      list = list.filter(isRuSkill);
+    } else if (categoryFilter) {
       list = list.filter((s) => s.category === categoryFilter);
     }
 
@@ -109,6 +116,18 @@ export default function Leaderboard({
           >
             Все
           </button>
+          {ruCount > 0 && (
+            <button
+              onClick={() => setCategoryFilter(categoryFilter === "__ru__" ? "" : "__ru__")}
+              className={`rounded-md px-2.5 py-1 text-xs transition-colors ${
+                categoryFilter === "__ru__"
+                  ? "bg-red-900/30 text-red-400 border border-red-800/40"
+                  : "border border-gray-800 text-gray-500 hover:text-gray-400"
+              }`}
+            >
+              Российские ({ruCount})
+            </button>
+          )}
           {categories.map((cat) => (
             <button
               key={cat}
