@@ -1,5 +1,5 @@
 export default function Hero() {
-  const agents = [
+  const globalAgents = [
     "Claude Code",
     "Cursor",
     "Copilot",
@@ -7,11 +7,18 @@ export default function Hero() {
     "Cline",
     "Codex",
     "Gemini",
-    "VSCode",
     "Roo",
     "Goose",
     "OpenCode",
     "Trae",
+  ];
+
+  const russianAgents = [
+    "GigaCode",
+    "Koda",
+    "SourceCraft",
+    "Kodify",
+    "Amvera Polide",
   ];
 
   return (
@@ -23,6 +30,14 @@ export default function Hero() {
         <span className="rounded bg-accent/10 px-2 py-0.5 text-xs font-medium text-accent">
           beta
         </span>
+        <a
+          href="https://github.com/vakovalskii/skillsbd"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="rounded bg-gray-900 border border-gray-800 px-2 py-0.5 text-[10px] text-gray-500 hover:text-gray-400 transition-colors"
+        >
+          open source
+        </a>
       </div>
 
       <p className="font-mono text-xs uppercase tracking-widest text-gray-500">
@@ -34,7 +49,7 @@ export default function Hero() {
         Устанавливайте одной командой, делитесь с RU-комьюнити.
       </p>
 
-      <div className="flex items-center gap-2 rounded-lg border border-gray-800 bg-gray-900 px-4 py-3 font-mono text-sm w-fit">
+      <div className="flex items-center gap-2 rounded-lg border border-gray-800 bg-gray-900 px-4 py-3 font-mono text-sm w-fit card-shine">
         <span className="text-gray-500">$</span>
         <span className="text-foreground">
           npx skillsbd add <span className="text-gray-500">&lt;owner/repo&gt;</span>
@@ -42,12 +57,23 @@ export default function Hero() {
       </div>
 
       <div className="mt-2">
-        <p className="mb-3 text-xs text-gray-600">Поддерживаемые агенты:</p>
-        <div className="flex flex-wrap gap-2">
-          {agents.map((agent) => (
+        <p className="mb-2 text-xs text-gray-600">Глобальные агенты:</p>
+        <div className="flex flex-wrap gap-1.5 mb-3">
+          {globalAgents.map((agent) => (
             <span
               key={agent}
-              className="rounded-md border border-gray-800 bg-gray-900 px-2.5 py-1 text-xs text-gray-400"
+              className="rounded-md border border-gray-800 bg-gray-900 px-2 py-0.5 text-xs text-gray-400"
+            >
+              {agent}
+            </span>
+          ))}
+        </div>
+        <p className="mb-2 text-xs text-gray-600">Российские агенты:</p>
+        <div className="flex flex-wrap gap-1.5">
+          {russianAgents.map((agent) => (
+            <span
+              key={agent}
+              className="rounded-md border border-accent/20 bg-accent/5 px-2 py-0.5 text-xs text-accent/80"
             >
               {agent}
             </span>
