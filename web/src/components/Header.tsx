@@ -5,11 +5,12 @@ import Link from "next/link";
 import AuthButton from "./AuthButton";
 
 const navLinks = [
+  { href: "/", label: "Skills" },
+  { href: "/mcp", label: "MCP" },
+  { href: "/tools", label: "CLI" },
   { href: "/new", label: "Новые", dot: true },
-  { href: "/official", label: "Выбор редакции" },
-  { href: "/tools", label: "Инструменты" },
   { href: "/docs", label: "Документация" },
-  { href: "/submit", label: "Добавить" },
+  { href: "/submit", label: "+" },
 ];
 
 export default function Header() {
