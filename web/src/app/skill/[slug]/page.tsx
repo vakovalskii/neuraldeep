@@ -16,29 +16,22 @@ function toSlug(name: string): string {
 async function findSkill(slug: string) {
   const decoded = decodeURIComponent(slug);
 
-  // Try exact name match
+  // 1. Exact name match
   let skill = await prisma.skill.findFirst({ where: { name: decoded, status: "approved" } });
-  if (skill) {
-    // Redirect to clean slug if URL has spaces
-    const clean = toSlug(skill.name);
-    if (slug !== clean && slug !== skill.name) redirect(`/skill/${clean}`);
-    return skill;
-  }
+  if (skill) return skill;
 
-  // Try case-insensitive match
+  // 2. Slug match — find skill whose toSlug(name) equals the slug
+  const allSkills = await prisma.skill.findMany({ where: { status: "approved" } });
+  skill = allSkills.find((s) => toSlug(s.name) === decoded.toLowerCase()) || null;
+  if (skill) return skill;
+
+  // 3. Case-insensitive match — redirect to proper slug
   skill = await prisma.skill.findFirst({
     where: { name: { equals: decoded, mode: "insensitive" }, status: "approved" },
   });
-  if (skill) {
-    redirect(`/skill/${toSlug(skill.name)}`);
-  }
+  if (skill) redirect(`/skill/${toSlug(skill.name)}`);
 
-  // Try slug match (name with spaces -> dashes)
-  const skills = await prisma.skill.findMany({ where: { status: "approved" } });
-  skill = skills.find((s) => toSlug(s.name) === decoded.toLowerCase()) || null;
-  if (skill) return skill;
-
-  // Fallback: try by id (old URLs)
+  // 4. Fallback: old cuid URLs
   skill = await prisma.skill.findUnique({ where: { id: slug } });
   if (skill) redirect(`/skill/${toSlug(skill.name)}`);
 
