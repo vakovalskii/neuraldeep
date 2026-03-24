@@ -6,19 +6,40 @@ import { usePathname } from "next/navigation";
 import AuthButton from "./AuthButton";
 
 const mainTabs = [
-  { href: "/", label: "Skills" },
-  { href: "/mcp", label: "MCP" },
-  { href: "/tools", label: "CLI" },
+  {
+    href: "/",
+    label: "Skills",
+    dropdown: [
+      { href: "/", label: "Каталог навыков" },
+      { href: "/new", label: "Новые" },
+      { href: "/official", label: "Выбор редакции" },
+      { href: "/submit", label: "Добавить навык" },
+    ],
+  },
+  {
+    href: "/mcp",
+    label: "MCP",
+    dropdown: [
+      { href: "/mcp", label: "Все MCP серверы" },
+      { href: "/mcp#russian", label: "Российские" },
+    ],
+  },
+  {
+    href: "/tools",
+    label: "CLI",
+    dropdown: [
+      { href: "/tools", label: "Все инструменты" },
+      { href: "/russian-agents", label: "Российские агенты" },
+    ],
+  },
 ];
 
 const moreLinks = [
-  { href: "/new", label: "Новые навыки" },
-  { href: "/official", label: "Выбор редакции" },
-  { href: "/submit", label: "Добавить навык" },
   { href: "/docs", label: "Документация" },
   { href: "/docs/api", label: "API" },
   { href: "/blog", label: "Блог" },
   { href: "/about", label: "О проекте" },
+  { href: "/changelog", label: "Обновления" },
 ];
 
 export default function Header() {
@@ -66,17 +87,36 @@ export default function Header() {
         {/* Main tabs — desktop */}
         <nav className="hidden sm:flex items-center gap-1 ml-6">
           {mainTabs.map((tab) => (
-            <Link
-              key={tab.href}
-              href={tab.href}
-              className={`px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${
-                isActive(tab.href)
-                  ? "bg-gray-900 text-foreground"
-                  : "text-gray-500 hover:text-gray-300 hover:bg-gray-900/50"
-              }`}
-            >
-              {tab.label}
-            </Link>
+            <div key={tab.href} className="relative group">
+              <Link
+                href={tab.href}
+                className={`flex items-center gap-1 px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${
+                  isActive(tab.href)
+                    ? "bg-gray-900 text-foreground"
+                    : "text-gray-500 hover:text-gray-300 hover:bg-gray-900/50"
+                }`}
+              >
+                {tab.label}
+                <svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor" className="opacity-40">
+                  <path d="M2.5 4L5 6.5L7.5 4" stroke="currentColor" strokeWidth="1.2" fill="none" />
+                </svg>
+              </Link>
+              {tab.dropdown && (
+                <div className="absolute left-0 top-full pt-1 hidden group-hover:block z-50">
+                  <div className="w-48 rounded-lg border border-gray-800 bg-gray-950 py-1 shadow-xl">
+                    {tab.dropdown.map((item) => (
+                      <Link
+                        key={item.href}
+                        href={item.href}
+                        className="block px-3 py-2 text-sm text-gray-400 hover:text-foreground hover:bg-gray-900 transition-colors"
+                      >
+                        {item.label}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
           ))}
         </nav>
 
