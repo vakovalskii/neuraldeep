@@ -2,7 +2,7 @@ import Header from "@/components/Header";
 
 export const metadata = {
   title: "Условия использования",
-  description: "Условия использования сервиса skillsbd",
+  description: "Условия использования сервиса NeuralDeep",
 };
 
 export default function TermsPage() {
@@ -18,7 +18,7 @@ export default function TermsPage() {
           <section>
             <h2 className="text-lg font-semibold text-foreground mb-2">1. Общие положения</h2>
             <p>
-              skillsbd — открытый каталог навыков для AI-агентов. Используя сервис, вы
+              NeuralDeep — агрегатор навыков и инструментов для AI-агентов. Используя сервис, вы
               принимаете данные условия.
             </p>
           </section>

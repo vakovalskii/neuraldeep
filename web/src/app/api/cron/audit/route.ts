@@ -26,7 +26,7 @@ export async function GET(request: NextRequest) {
   for (const skill of skills) {
     try {
       // Run audit
-      const auditRes = await fetch(`${process.env.NEXTAUTH_URL || "https://skillsbd.ru"}/api/skills/audit`, {
+      const auditRes = await fetch(`${process.env.NEXTAUTH_URL || "https://neuraldeep.ru"}/api/skills/audit`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ skillId: skill.id }),

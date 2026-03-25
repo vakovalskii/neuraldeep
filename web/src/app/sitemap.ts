@@ -4,7 +4,7 @@ import type { MetadataRoute } from "next";
 export const dynamic = "force-dynamic";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = "https://skillsbd.ru";
+  const baseUrl = "https://neuraldeep.ru";
 
   const skills = await prisma.skill.findMany({
     select: { name: true, updatedAt: true },

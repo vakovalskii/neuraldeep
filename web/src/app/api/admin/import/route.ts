@@ -148,7 +148,7 @@ export async function PUT(request: NextRequest) {
     });
 
     // Auto-run audit
-    fetch(`${process.env.NEXTAUTH_URL || "https://skillsbd.ru"}/api/skills/audit`, {
+    fetch(`${process.env.NEXTAUTH_URL || "https://neuraldeep.ru"}/api/skills/audit`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ skillId: skill.id }),

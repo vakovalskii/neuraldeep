@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export const metadata = {
   title: "Блог",
-  description: "Статьи о навыках для AI-агентов, обзоры и гайды от skillsbd",
+  description: "Статьи о навыках для AI-агентов, обзоры и гайды от NeuralDeep",
 };
 
 const posts = [
@@ -27,7 +27,7 @@ const posts = [
   },
   {
     title: "Навыки для Cursor AI",
-    desc: "Как расширить Cursor с помощью навыков из skillsbd. Установка, настройка, примеры.",
+    desc: "Как расширить Cursor с помощью навыков из NeuralDeep. Установка, настройка, примеры.",
     href: "/cursor-ai-skills",
     date: "23 марта 2026",
   },

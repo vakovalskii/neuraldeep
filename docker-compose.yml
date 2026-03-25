@@ -29,7 +29,7 @@ services:
         condition: service_healthy
     environment:
       - DATABASE_URL=postgresql://skills:${POSTGRES_PASSWORD}@postgres:5432/skillsdb
-      - NEXTAUTH_URL=https://skillsbd.ru
+      - NEXTAUTH_URL=https://neuraldeep.ru
       - NEXTAUTH_SECRET=${NEXTAUTH_SECRET}
       - AUTH_SECRET=${NEXTAUTH_SECRET}
       - AUTH_TRUST_HOST=true
@@ -43,10 +43,18 @@ services:
       - skills_content:/app/data/skills-content
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.app.rule=Host(`skillsbd.ru`)"
+      - "traefik.http.routers.app.rule=Host(`neuraldeep.ru`)"
       - "traefik.http.routers.app.entrypoints=websecure"
       - "traefik.http.routers.app.tls.certresolver=le"
       - "traefik.http.services.app.loadbalancer.server.port=3000"
+      # Redirect skillsbd.ru → neuraldeep.ru
+      - "traefik.http.routers.old.rule=Host(`skillsbd.ru`)"
+      - "traefik.http.routers.old.entrypoints=websecure"
+      - "traefik.http.routers.old.tls.certresolver=le"
+      - "traefik.http.routers.old.middlewares=redirect-to-new"
+      - "traefik.http.middlewares.redirect-to-new.redirectregex.regex=^https://skillsbd\\.ru/(.*)"
+      - "traefik.http.middlewares.redirect-to-new.redirectregex.replacement=https://neuraldeep.ru/$${1}"
+      - "traefik.http.middlewares.redirect-to-new.redirectregex.permanent=true"
     mem_limit: 384m
 
   postgres:

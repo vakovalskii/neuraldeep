@@ -34,7 +34,7 @@ export default async function CursorAISkillsPage() {
         </h1>
         <p className="text-gray-400 text-lg mb-8 max-w-2xl">
           Cursor — AI-первая IDE с мощным агентом для написания кода.
-          Навыки из skillsbd расширяют его знания: работа с Яндекс API,
+          Навыки из NeuralDeep расширяют его знания: работа с Яндекс API,
           российскими сервисами, генерация документов.
         </p>
 
@@ -75,7 +75,7 @@ export default async function CursorAISkillsPage() {
           <h2 className="text-lg font-semibold mb-3">Cursor AI vs Claude Code</h2>
           <p className="text-gray-400 text-sm">
             Cursor — это IDE с графическим интерфейсом, Claude Code — терминальный агент.
-            Навыки из skillsbd работают с обоими: они хранятся как файлы в проекте и
+            Навыки из NeuralDeep работают с обоими: они хранятся как файлы в проекте и
             автоматически читаются любым агентом, который поддерживает формат SKILL.md.
           </p>
         </div>

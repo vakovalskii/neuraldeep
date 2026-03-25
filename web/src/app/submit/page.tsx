@@ -5,7 +5,7 @@ import SubmitForm from "./SubmitForm";
 
 export const metadata = {
   title: "Добавить навык",
-  description: "Опубликуйте свой навык в каталоге skillsbd",
+  description: "Опубликуйте свой навык в каталоге NeuralDeep",
 };
 
 export default async function SubmitPage() {

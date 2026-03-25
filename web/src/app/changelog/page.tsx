@@ -2,7 +2,7 @@ import Header from "@/components/Header";
 
 export const metadata = {
   title: "Обновления",
-  description: "История изменений skillsbd",
+  description: "История изменений NeuralDeep",
 };
 
 const changelog = [
@@ -116,7 +116,7 @@ const changelog = [
       "PostgreSQL + Prisma ORM",
       "Traefik v3 + Let's Encrypt TLS",
       "Автодеплой через GitHub Actions (push to main → deploy)",
-      "Cloudflare DNS для skillsbd.ru",
+      "Cloudflare DNS для neuraldeep.ru",
       "Навыки Polyakov: Яндекс Wordstat, Вебмастер, Метрика и другие",
       "Навык для 1С:Предприятие (65 скиллов, 183 ★)",
       "Навык для Битрикс24",

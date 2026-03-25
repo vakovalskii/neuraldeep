@@ -78,10 +78,10 @@ export default function Header() {
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2 shrink-0">
           <span className="flex h-6 w-6 items-center justify-center rounded bg-accent text-[10px] font-bold text-white relative">
-            sb
+            nd
             <span className="absolute -top-0.5 -right-0.5 h-2 w-2 rounded-full bg-green-400 animate-live" />
           </span>
-          <span className="text-lg font-semibold tracking-tight hidden sm:inline">skillsbd</span>
+          <span className="text-lg font-semibold tracking-tight hidden sm:inline">NeuralDeep</span>
         </Link>
 
         {/* Main tabs — desktop */}
