@@ -2,7 +2,7 @@ import Header from "@/components/Header";
 
 export const metadata = {
   title: "Политика конфиденциальности",
-  description: "Политика конфиденциальности skillsbd",
+  description: "Политика конфиденциальности NeuralDeep",
 };
 
 export default function PrivacyPage() {
@@ -43,14 +43,14 @@ export default function PrivacyPage() {
             <h2 className="text-lg font-semibold text-foreground mb-2">4. Удаление данных</h2>
             <p>
               Вы можете запросить удаление вашего аккаунта и всех связанных данных,
-              написав нам в Telegram: <a href="https://t.me/neuraldeep" className="text-accent hover:underline">@skillsbd</a>.
+              написав нам в Telegram: <a href="https://t.me/neuraldeep" className="text-accent hover:underline">@neuraldeep</a>.
             </p>
           </section>
 
           <section>
             <h2 className="text-lg font-semibold text-foreground mb-2">5. Контакты</h2>
             <p>
-              По вопросам конфиденциальности: <a href="https://t.me/neuraldeep" className="text-accent hover:underline">@skillsbd</a> в Telegram.
+              По вопросам конфиденциальности: <a href="https://t.me/neuraldeep" className="text-accent hover:underline">@neuraldeep</a> в Telegram.
             </p>
           </section>
         </div>

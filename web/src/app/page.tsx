@@ -74,7 +74,7 @@ export default async function Home() {
           </div>
         </div>
         <div className="mx-auto max-w-6xl mt-8 pt-6 border-t border-gray-800 text-center text-xs text-gray-600">
-          skillsbd — открытый каталог навыков для AI-агентов
+          NeuralDeep — агрегатор навыков и инструментов для AI-агентов
         </div>
       </footer>
     </>

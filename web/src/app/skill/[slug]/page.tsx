@@ -52,7 +52,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     openGraph: {
       title,
       description: skill.description,
-      url: `https://skillsbd.ru/skill/${skill.name}`,
+      url: `https://neuraldeep.ru/skill/${skill.name}`,
       type: "article",
     },
     twitter: {

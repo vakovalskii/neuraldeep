@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: "/",
       disallow: ["/api/"],
     },
-    sitemap: "https://skillsbd.ru/sitemap.xml",
+    sitemap: "https://neuraldeep.ru/sitemap.xml",
   };
 }

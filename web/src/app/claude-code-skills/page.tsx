@@ -89,7 +89,7 @@ export default async function ClaudeCodeSkillsPage() {
               Это чистые текстовые инструкции, которые агент читает из директории проекта.
             </p>
             <p>
-              <strong className="text-foreground">skillsbd</strong> — российский каталог навыков
+              <strong className="text-foreground">NeuralDeep</strong> — российский каталог навыков
               с фокусом на Яндекс, Битрикс, 1С и другие сервисы, востребованные в РФ.
             </p>
           </div>

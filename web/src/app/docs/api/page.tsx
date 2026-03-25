@@ -2,7 +2,7 @@ import Header from "@/components/Header";
 
 export const metadata = {
   title: "API документация",
-  description: "Открытый API каталога skillsbd для AI-агентов и разработчиков",
+  description: "Открытый API каталога NeuralDeep для AI-агентов и разработчиков",
 };
 
 const endpoints = [
@@ -79,7 +79,7 @@ export default function APIDocsPage() {
           Открытый API для AI-агентов и разработчиков.
         </p>
         <p className="text-sm text-gray-500 mb-8">
-          Базовый URL: <code className="text-accent bg-gray-900 px-1.5 py-0.5 rounded">https://skillsbd.ru</code>
+          Базовый URL: <code className="text-accent bg-gray-900 px-1.5 py-0.5 rounded">https://neuraldeep.ru</code>
           — авторизация не требуется для GET-запросов.
         </p>
 
@@ -128,28 +128,28 @@ export default function APIDocsPage() {
           <div className="space-y-4 text-sm font-mono text-gray-400">
             <div>
               <p className="text-gray-500 mb-1"># Поиск навыков по ключевому слову</p>
-              <p>curl https://skillsbd.ru/api/skills?q=яндекс</p>
+              <p>curl https://neuraldeep.ru/api/skills?q=яндекс</p>
             </div>
             <div>
               <p className="text-gray-500 mb-1"># Топ навыков по установкам</p>
-              <p>curl https://skillsbd.ru/api/skills</p>
+              <p>curl https://neuraldeep.ru/api/skills</p>
             </div>
             <div>
               <p className="text-gray-500 mb-1"># Тренды за 24 часа</p>
-              <p>curl https://skillsbd.ru/api/skills?sort=trending</p>
+              <p>curl https://neuraldeep.ru/api/skills?sort=trending</p>
             </div>
             <div>
               <p className="text-gray-500 mb-1"># Получить SKILL.md навыка</p>
-              <p>curl &quot;https://skillsbd.ru/api/skills/readme?skillId=ID&quot;</p>
+              <p>curl &quot;https://neuraldeep.ru/api/skills/readme?skillId=ID&quot;</p>
             </div>
             <div>
               <p className="text-gray-500 mb-1"># Из Python</p>
               <p className="text-gray-400">import requests</p>
-              <p className="text-gray-400">skills = requests.get(&quot;https://skillsbd.ru/api/skills?q=seo&quot;).json()</p>
+              <p className="text-gray-400">skills = requests.get(&quot;https://neuraldeep.ru/api/skills?q=seo&quot;).json()</p>
             </div>
             <div>
               <p className="text-gray-500 mb-1"># Из JavaScript</p>
-              <p className="text-gray-400">const skills = await fetch(&quot;https://skillsbd.ru/api/skills&quot;).then(r =&gt; r.json())</p>
+              <p className="text-gray-400">const skills = await fetch(&quot;https://neuraldeep.ru/api/skills&quot;).then(r =&gt; r.json())</p>
             </div>
           </div>
         </div>

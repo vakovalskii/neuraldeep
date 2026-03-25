@@ -2,7 +2,7 @@ import Header from "@/components/Header";
 
 export const metadata = {
   title: "О проекте",
-  description: "skillsbd — российский каталог навыков для AI-агентов. История создания и миссия.",
+  description: "NeuralDeep — российский агрегатор навыков для AI-агентов. История создания и миссия.",
 };
 
 export default function AboutPage() {
@@ -10,7 +10,7 @@ export default function AboutPage() {
     <>
       <Header />
       <main className="mx-auto w-full max-w-3xl flex-1 px-4 py-12">
-        <h1 className="text-3xl font-bold mb-2">О skillsБД</h1>
+        <h1 className="text-3xl font-bold mb-2">О NeuralDeep</h1>
         <p className="text-sm text-gray-600 mb-8">Российский каталог навыков для AI-агентов</p>
 
         <div className="flex flex-col gap-8 text-gray-400 leading-relaxed">
@@ -25,9 +25,9 @@ export default function AboutPage() {
           </section>
 
           <section>
-            <h2 className="text-xl font-semibold text-foreground mb-3">Что такое skillsБД?</h2>
+            <h2 className="text-xl font-semibold text-foreground mb-3">Что такое NeuralDeep?</h2>
             <p>
-              <strong className="text-foreground">skillsБД</strong> — это открытый каталог навыков
+              <strong className="text-foreground">NeuralDeep</strong> — это открытый каталог навыков
               для AI-агентов с фокусом на российские сервисы. Навыки для работы с Яндекс, Битрикс, 1С
               и другими сервисами, которые нужны каждый день. Устанавливайте одной командой, делитесь
               с RU-комьюнити.

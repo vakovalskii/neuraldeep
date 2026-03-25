@@ -95,7 +95,7 @@ export default function AIAgentsPage() {
 
         <h2 className="text-xl font-semibold mb-4">Навыки для российских сервисов</h2>
         <p className="text-gray-400 mb-4">
-          В каталоге skillsbd собраны навыки с фокусом на РФ: Яндекс Wordstat,
+          В каталоге NeuralDeep собраны навыки с фокусом на РФ: Яндекс Wordstat,
           Яндекс Вебмастер, Метрика, Telegraph, генерация документов и другие.
         </p>
 

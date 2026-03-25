@@ -6,7 +6,7 @@ export const dynamic = "force-dynamic";
 
 export const metadata = {
   title: "Выбрано редакцией",
-  description: "Лучшие навыки для AI-агентов, отобранные редакцией skillsbd",
+  description: "Лучшие навыки для AI-агентов, отобранные редакцией NeuralDeep",
 };
 
 export default async function EditorsPickPage() {
@@ -21,7 +21,7 @@ export default async function EditorsPickPage() {
       <main className="mx-auto w-full max-w-4xl flex-1 px-4 py-12">
         <h1 className="text-3xl font-bold mb-2">Выбрано редакцией</h1>
         <p className="text-gray-500 mb-8">
-          Навыки, проверенные и рекомендованные командой skillsbd.
+          Навыки, проверенные и рекомендованные командой NeuralDeep.
         </p>
 
         {skills.length === 0 ? (

@@ -13,16 +13,16 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const title = "skillsbd — российский каталог навыков для AI-агентов";
+const title = "NeuralDeep — агрегатор навыков, MCP серверов и AI-инструментов";
 const description =
-  "Навыки для работы с Яндекс, Битрикс, 1С и другими российскими сервисами. Открытый каталог для Claude Code, Cursor, Copilot и других AI-агентов. RU-комьюнити.";
-const url = "https://skillsbd.ru";
+  "Российский агрегатор для AI-агентов: навыки, MCP серверы, CLI инструменты. Яндекс, Битрикс, 1С, GigaChat и другие сервисы. Open source каталог для Claude Code, Cursor, Codex.";
+const url = "https://neuraldeep.ru";
 
 export const metadata: Metadata = {
   metadataBase: new URL(url),
   title: {
     default: title,
-    template: "%s | skillsbd",
+    template: "%s | NeuralDeep",
   },
   description,
   keywords: [
@@ -43,13 +43,13 @@ export const metadata: Metadata = {
     "российские сервисы",
     "RU комьюнити",
   ],
-  authors: [{ name: "skillsbd" }],
-  creator: "skillsbd",
+  authors: [{ name: "NeuralDeep" }],
+  creator: "NeuralDeep",
   openGraph: {
     type: "website",
     locale: "ru_RU",
     url,
-    siteName: "skillsbd",
+    siteName: "NeuralDeep",
     title,
     description,
   },

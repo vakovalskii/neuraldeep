@@ -7,7 +7,7 @@ export const dynamic = "force-dynamic";
 
 export const metadata = {
   title: "Новые навыки",
-  description: "Недавно добавленные навыки для AI-агентов в каталоге skillsbd",
+  description: "Недавно добавленные навыки для AI-агентов в каталоге NeuralDeep",
 };
 
 export default async function NewSkillsPage() {
