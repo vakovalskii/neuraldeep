@@ -1,5 +1,6 @@
 import Header from "@/components/Header";
 import McpGrid from "./McpGrid";
+import { Suspense } from "react";
 
 export const metadata = {
   title: "MCP серверы для AI-агентов",
@@ -27,7 +28,9 @@ export default function McpPage() {
           MCP серверы дают агентам доступ к данным и инструментам: базы данных,
           API, файловые системы, браузеры и другие ресурсы.
         </p>
-        <McpGrid />
+        <Suspense>
+          <McpGrid />
+        </Suspense>
       </main>
     </>
   );
