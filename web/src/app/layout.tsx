@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Providers from "@/components/Providers";
 import YandexMetrika from "@/components/YandexMetrika";
+import AgentChat from "@/components/AgentChat";
 import { Suspense } from "react";
 import "./globals.css";
 
@@ -90,7 +91,10 @@ export default function RootLayout({
       </head>
       <body className="min-h-full flex flex-col bg-background text-foreground">
         <Suspense><YandexMetrika /></Suspense>
-        <Providers>{children}</Providers>
+        <Providers>
+          {children}
+          <AgentChat />
+        </Providers>
       </body>
     </html>
   );

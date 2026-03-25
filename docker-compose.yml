@@ -36,6 +36,9 @@ services:
       - GITHUB_TOKEN=${GITHUB_TOKEN:-}
       - ADMIN_USER_IDS=${ADMIN_USER_IDS:-}
       - NEXT_PUBLIC_ADMIN_IDS=${ADMIN_USER_IDS:-}
+      - AGENT_API_KEY=${AGENT_API_KEY:-}
+      - AGENT_API_URL=${AGENT_API_URL:-http://109.230.162.92:44334/v1}
+      - AGENT_MODEL=${AGENT_MODEL:-gpt-oss-120b}
       - SKILLS_STORAGE_PATH=/app/data/skills-content
     volumes:
       - skills_content:/app/data/skills-content
