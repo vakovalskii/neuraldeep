@@ -17,11 +17,13 @@ export async function POST(request: NextRequest) {
   }
 
   const body = await request.json();
-  const { name, owner, repo, description, category, authorName, telegramLink } = body;
+  const { name, owner, repo, description, category, authorName, telegramLink, type } = body;
 
   if (!name || !owner || !repo || !description || !category) {
     return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
   }
+
+  const skillType = type === "mcp" ? "mcp" : "skill";
 
   // Validate owner — strip URLs if pasted full GitHub link
   const cleanOwner = owner.replace(/^https?:\/\/github\.com\//i, "").replace(/\/$/, "");
@@ -47,6 +49,7 @@ export async function POST(request: NextRequest) {
       authorName: authorName || null,
       telegramLink: telegramLink || null,
       authorId: session.user.id,
+      type: skillType,
       status: "pending",
       githubStars,
     },
@@ -59,5 +62,6 @@ export async function POST(request: NextRequest) {
     body: JSON.stringify({ skillId: skill.id }),
   }).catch(() => {});
 
-  return NextResponse.json({ ...skill, message: "Навык отправлен на модерацию" }, { status: 201 });
+  const label = skillType === "mcp" ? "MCP сервер" : "Навык";
+  return NextResponse.json({ ...skill, message: `${label} отправлен на модерацию` }, { status: 201 });
 }

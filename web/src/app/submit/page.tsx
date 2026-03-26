@@ -4,8 +4,8 @@ import { redirect } from "next/navigation";
 import SubmitForm from "./SubmitForm";
 
 export const metadata = {
-  title: "Добавить навык",
-  description: "Опубликуйте свой навык в каталоге NeuralDeep",
+  title: "Добавить навык или MCP сервер",
+  description: "Опубликуйте свой навык или MCP сервер в каталоге NeuralDeep",
 };
 
 export default async function SubmitPage() {
@@ -15,9 +15,9 @@ export default async function SubmitPage() {
     <>
       <Header />
       <main className="mx-auto w-full max-w-2xl flex-1 px-4 py-12">
-        <h1 className="text-3xl font-bold mb-2">Добавить навык</h1>
+        <h1 className="text-3xl font-bold mb-2">Добавить навык или MCP сервер</h1>
         <p className="text-gray-500 mb-8">
-          Опубликуйте свой навык, чтобы другие разработчики могли его использовать.
+          Опубликуйте свой навык или MCP сервер, чтобы другие разработчики могли его использовать.
         </p>
 
         {!session ? (

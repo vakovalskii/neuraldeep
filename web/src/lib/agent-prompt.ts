@@ -11,7 +11,12 @@ export async function buildSystemPrompt(): Promise<string> {
   if (cachedPrompt && Date.now() - cachedAt < TTL) return cachedPrompt;
 
   const skills = await prisma.skill.findMany({
-    where: { status: "approved" },
+    where: { status: "approved", type: "skill" },
+    orderBy: { installs: "desc" },
+  });
+
+  const dbMcpServers = await prisma.skill.findMany({
+    where: { status: "approved", type: "mcp" },
     orderBy: { installs: "desc" },
   });
 
@@ -25,7 +30,16 @@ export async function buildSystemPrompt(): Promise<string> {
     )
     .join("\n");
 
-  const mcpBlock = mcpServers
+  const dbMcpBlock = dbMcpServers
+    .map(
+      (s) =>
+        `- "${s.name}" (${s.owner}/${s.repo}) — ${s.description}. ` +
+        `Категория: ${s.category}. ★${s.githubStars}. ` +
+        `Страница: https://neuraldeep.ru/mcp/${toSlug(s.name)}`
+    )
+    .join("\n");
+
+  const staticMcpBlock = mcpServers
     .map(
       (m) =>
         `- "${m.name}" — ${m.desc}. ` +
@@ -34,6 +48,8 @@ export async function buildSystemPrompt(): Promise<string> {
         `Страница: https://neuraldeep.ru/mcp/${m.slug}`
     )
     .join("\n");
+
+  const mcpBlock = [dbMcpBlock, staticMcpBlock].filter(Boolean).join("\n");
 
   const toolsBlock = cliTools
     .map(
@@ -64,7 +80,7 @@ NeuralDeep — российский агрегатор навыков (skills), 
 === НАВЫКИ (${skills.length} шт) ===
 ${skillsBlock}
 
-=== MCP СЕРВЕРЫ (${mcpServers.length} шт) ===
+=== MCP СЕРВЕРЫ (${dbMcpServers.length + mcpServers.length} шт) ===
 ${mcpBlock}
 
 === CLI ИНСТРУМЕНТЫ (${cliTools.length} шт) ===

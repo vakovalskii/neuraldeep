@@ -1,6 +1,11 @@
 import Header from "@/components/Header";
 import McpGrid from "./McpGrid";
 import { Suspense } from "react";
+import { prisma } from "@/lib/db";
+import { mcpServers, type McpServer } from "@/data/mcp-servers";
+import { toSlug } from "@/data/skills";
+
+export const dynamic = "force-dynamic";
 
 export const metadata = {
   title: "MCP серверы для AI-агентов | NeuralDeep",
@@ -25,7 +30,27 @@ export const metadata = {
   ],
 };
 
-export default function McpPage() {
+export default async function McpPage() {
+  const dbMcp = await prisma.skill.findMany({
+    where: { status: "approved", type: "mcp" },
+    orderBy: { installs: "desc" },
+  });
+
+  const dbAsStatic: McpServer[] = dbMcp.map((s) => ({
+    name: s.name,
+    slug: toSlug(s.name),
+    desc: s.description,
+    author: s.authorName || s.owner,
+    stars: s.githubStars,
+    license: "Open",
+    url: `https://github.com/${s.owner}/${s.repo}`,
+    install: `npx skillsbd add ${s.owner}/${s.repo}/${s.name}`,
+    category: s.category,
+    tags: s.tags,
+  }));
+
+  const allServers = [...dbAsStatic, ...mcpServers];
+
   return (
     <>
       <Header />
@@ -39,7 +64,7 @@ export default function McpPage() {
           API, файловые системы, браузеры и другие ресурсы.
         </p>
         <Suspense>
-          <McpGrid />
+          <McpGrid servers={allServers} />
         </Suspense>
       </main>
     </>

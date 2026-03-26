@@ -11,7 +11,7 @@ export const metadata = {
 
 export default async function EditorsPickPage() {
   const skills = await prisma.skill.findMany({
-    where: { featured: true, status: "approved" },
+    where: { featured: true, status: "approved", type: "skill" },
     orderBy: { githubStars: "desc" },
   });
 

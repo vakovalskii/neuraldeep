@@ -21,6 +21,7 @@ export const metadata = {
 
 export default async function CursorAISkillsPage() {
   const skills = await prisma.skill.findMany({
+    where: { status: "approved", type: "skill" },
     orderBy: { installs: "desc" },
     take: 12,
   });

@@ -3,12 +3,9 @@
 import { useState, useMemo, useEffect, useRef } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
-import { mcpServers } from "@/data/mcp-servers";
+import type { McpServer } from "@/data/mcp-servers";
 
-
-const servers = mcpServers;
-
-export default function McpGrid() {
+export default function McpGrid({ servers }: { servers: McpServer[] }) {
   const searchParams = useSearchParams();
   const searchRef = useRef<HTMLInputElement>(null);
   const [search, setSearch] = useState("");
