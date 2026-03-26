@@ -52,6 +52,7 @@ model Skill {
   authorName   String?
   telegramLink String?
   featured     Boolean  @default(false)
+  type         String   @default("skill")
   status       String   @default("pending")
   githubStars  Int      @default(0)
   createdAt    DateTime @default(now())
@@ -64,6 +65,7 @@ model Skill {
 
   @@index([category])
   @@index([installs])
+  @@index([type])
 }
 
 model Audit {

@@ -22,6 +22,7 @@ export const metadata = {
 
 export default async function ClaudeCodeSkillsPage() {
   const skills = await prisma.skill.findMany({
+    where: { status: "approved", type: "skill" },
     orderBy: { installs: "desc" },
     take: 20,
   });

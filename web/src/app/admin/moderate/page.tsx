@@ -10,6 +10,7 @@ interface PendingSkill {
   repo: string;
   description: string;
   category: string;
+  type: string;
   authorName: string | null;
   telegramLink: string | null;
   createdAt: string;
@@ -74,7 +75,12 @@ export default function ModeratePage() {
             >
               <div className="flex items-start justify-between">
                 <div className="flex-1">
-                  <h3 className="font-semibold text-lg">{skill.name}</h3>
+                  <div className="flex items-center gap-2">
+                    <h3 className="font-semibold text-lg">{skill.name}</h3>
+                    {skill.type === "mcp" && (
+                      <span className="rounded bg-purple-900/30 border border-purple-800/40 px-1.5 py-0.5 text-[10px] font-bold text-purple-400">MCP</span>
+                    )}
+                  </div>
                   <p className="text-sm text-gray-400 mt-1">{skill.description}</p>
                   <div className="flex flex-wrap gap-3 mt-3 text-xs text-gray-500">
                     <span className="font-mono">{skill.owner}/{skill.repo}</span>

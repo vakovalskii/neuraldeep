@@ -1,6 +1,7 @@
 import { prisma } from "@/lib/db";
 import type { MetadataRoute } from "next";
 import { mcpServers } from "@/data/mcp-servers";
+import { toSlug } from "@/data/skills";
 
 export const dynamic = "force-dynamic";
 
@@ -9,7 +10,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const skills = await prisma.skill.findMany({
     select: { name: true, updatedAt: true },
-    where: { status: "approved" },
+    where: { status: "approved", type: "skill" },
+  });
+
+  const dbMcp = await prisma.skill.findMany({
+    select: { name: true, updatedAt: true },
+    where: { status: "approved", type: "mcp" },
   });
 
   const staticPages = [
@@ -35,11 +41,18 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.8,
   }));
 
-  const mcpPages = mcpServers.map((s) => ({
+  const staticMcpPages = mcpServers.map((s) => ({
     url: `${baseUrl}/mcp/${s.slug}`,
     changeFrequency: "weekly" as const,
     priority: 0.8,
   }));
 
-  return [...staticPages, ...skillPages, ...mcpPages];
+  const dbMcpPages = dbMcp.map((s) => ({
+    url: `${baseUrl}/mcp/${toSlug(s.name)}`,
+    lastModified: s.updatedAt,
+    changeFrequency: "weekly" as const,
+    priority: 0.8,
+  }));
+
+  return [...staticPages, ...skillPages, ...staticMcpPages, ...dbMcpPages];
 }

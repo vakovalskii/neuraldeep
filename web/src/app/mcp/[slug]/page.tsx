@@ -1,15 +1,43 @@
 import Header from "@/components/Header";
-import { mcpServers } from "@/data/mcp-servers";
+import { mcpServers, type McpServer } from "@/data/mcp-servers";
+import { prisma } from "@/lib/db";
+import { toSlug } from "@/data/skills";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 
-export function generateStaticParams() {
-  return mcpServers.map((s) => ({ slug: s.slug }));
+export const dynamic = "force-dynamic";
+
+async function findMcpServer(slug: string): Promise<McpServer | null> {
+  // 1. Static servers
+  const staticServer = mcpServers.find((s) => s.slug === slug);
+  if (staticServer) return staticServer;
+
+  // 2. DB servers (type=mcp)
+  const allMcp = await prisma.skill.findMany({
+    where: { status: "approved", type: "mcp" },
+  });
+  const dbItem = allMcp.find((s) => toSlug(s.name) === slug);
+  if (dbItem) {
+    return {
+      name: dbItem.name,
+      slug: toSlug(dbItem.name),
+      desc: dbItem.description,
+      author: dbItem.authorName || dbItem.owner,
+      stars: dbItem.githubStars,
+      license: "Open",
+      url: `https://github.com/${dbItem.owner}/${dbItem.repo}`,
+      install: `npx skillsbd add ${dbItem.owner}/${dbItem.repo}/${dbItem.name}`,
+      category: dbItem.category,
+      tags: dbItem.tags,
+    };
+  }
+
+  return null;
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const server = mcpServers.find((s) => s.slug === slug);
+  const server = await findMcpServer(slug);
   if (!server) return { title: "MCP сервер не найден" };
 
   const isRu = server.category === "Российские";
@@ -36,7 +64,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
 export default async function McpServerPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const server = mcpServers.find((s) => s.slug === slug);
+  const server = await findMcpServer(slug);
   if (!server) notFound();
 
   const isRu = server.category === "Российские";

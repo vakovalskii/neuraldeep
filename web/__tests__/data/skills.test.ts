@@ -26,7 +26,7 @@ describe("getSkills", () => {
     await getSkills();
     expect(prisma.skill.findMany).toHaveBeenCalledWith(
       expect.objectContaining({
-        where: { status: "approved" },
+        where: { status: "approved", type: "skill" },
         orderBy: { installs: "desc" },
         take: 100,
       })
@@ -38,7 +38,7 @@ describe("getSkills", () => {
     await getSkills("trending");
     expect(prisma.skill.findMany).toHaveBeenCalledWith(
       expect.objectContaining({
-        where: { status: "approved" },
+        where: { status: "approved", type: "skill" },
         orderBy: { trending24h: "desc" },
         take: 100,
       })

@@ -6,7 +6,8 @@ export async function GET(request: NextRequest) {
   const sort = searchParams.get("sort") || "all";
   const q = searchParams.get("q") || "";
 
-  const baseWhere = { status: "approved" as const };
+  const type = searchParams.get("type") || "skill";
+  const baseWhere = { status: "approved" as const, type };
 
   const where = q
     ? {

@@ -24,7 +24,7 @@ export async function getSkills(sort: "all" | "trending" = "all"): Promise<Skill
       : { installs: "desc" as const };
 
   return prisma.skill.findMany({
-    where: { status: "approved" },
+    where: { status: "approved", type: "skill" },
     orderBy,
     take: 100,
     include: { _count: { select: { comments: true } } },
@@ -32,12 +32,12 @@ export async function getSkills(sort: "all" | "trending" = "all"): Promise<Skill
 }
 
 export async function getTotalInstalls(): Promise<number> {
-  const result = await prisma.skill.aggregate({ where: { status: "approved" }, _sum: { installs: true } });
+  const result = await prisma.skill.aggregate({ where: { status: "approved", type: "skill" }, _sum: { installs: true } });
   return result._sum.installs ?? 0;
 }
 
 export async function getTotalTrending(): Promise<number> {
-  const result = await prisma.skill.aggregate({ where: { status: "approved" }, _sum: { trending24h: true } });
+  const result = await prisma.skill.aggregate({ where: { status: "approved", type: "skill" }, _sum: { trending24h: true } });
   return result._sum.trending24h ?? 0;
 }
 
