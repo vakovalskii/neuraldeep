@@ -11,17 +11,36 @@
 - [docs/SECURITY.md](docs/SECURITY.md) — аутентификация, аудит, rate limiting
 - [README.md](README.md) — быстрый старт, локальная разработка, корпоративное использование
 
-## Git workflow
+## Рабочий процесс (обязательно)
 
-**НИКОГДА не коммить напрямую в main.** Всегда:
+**НИКОГДА не коммить напрямую в main.** Полный цикл:
 
-1. Создай ветку от main: `git checkout -b feat/short-description`
-2. Делай коммиты в ветку
-3. Пуш: `git push -u origin feat/short-description`
-4. Создай PR через `gh pr create`
-5. После ревью — мерж через GitHub
+1. **Ветка** — создай от актуального main: `git checkout main && git pull && git checkout -b feat/short-description`
+2. **Анализ** — зайди на сервер по SSH, посмотри БД, проверь текущее состояние данных
+3. **Правки** — вноси изменения в ветке, коммить
+4. **Пуш** — `git push -u origin feat/short-description`
+5. **PR** — `gh pr create`, дождись CI (тесты + билд)
+6. **Мерж** — только после прохождения CI
+7. **Деплой** — CI/CD автоматически деплоит main на сервер
+8. **Проверка** — после деплоя проверь сайт через Playwright MCP (browser_navigate → browser_snapshot)
 
-Формат веток:
+### SSH и БД
+
+Сервер: `ssh ubuntu@<DEPLOY_HOST>` (IP в deploy/server.md).
+БД: PostgreSQL в Docker.
+
+```bash
+# Посмотреть контейнеры
+ssh ubuntu@<HOST> "docker ps"
+
+# Запрос к БД
+ssh ubuntu@<HOST> 'docker exec -i $(docker ps -q -f name=postgres) psql -U skills -d skillsdb -c "SELECT ..."'
+```
+
+**НЕ собирать и НЕ запускать тесты локально** — зависимости (Prisma, vitest и т.д.) устанавливаются только на CI. Локально можно только редактировать файлы и коммитить.
+
+### Формат веток
+
 - `feat/` — новая функциональность
 - `fix/` — баг-фикс
 - `refactor/` — рефакторинг без изменения поведения
@@ -40,8 +59,8 @@ Add category filter to leaderboard
 
 ## Перед коммитом
 
-1. `cd web && npm run test` — все 38+ тестов должны проходить
-2. `npx prisma generate` — если менялась schema.prisma
+1. Убедись что CI прогонит `cd web && npm run test` — все тесты должны проходить
+2. `npx prisma generate` — если менялась schema.prisma (на CI)
 3. Не коммить `.env`, секреты, токены, API ключи
 
 ## Стек
