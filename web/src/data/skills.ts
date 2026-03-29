@@ -1,3 +1,5 @@
+export type SkillType = "skill" | "mcp";
+
 export interface Skill {
   id: string;
   name: string;
@@ -7,7 +9,10 @@ export interface Skill {
   installs: number;
   trending24h: number;
   category: string;
+  type: SkillType;
   tags: string[];
+  addedAt: string; // ISO date
+  isNew?: boolean;
 }
 
 export const skills: Skill[] = [
@@ -20,7 +25,9 @@ export const skills: Skill[] = [
     installs: 284300,
     trending24h: 1240,
     category: "утилиты",
+    type: "skill",
     tags: ["поиск", "каталог", "утилиты"],
+    addedAt: "2026-01-15",
   },
   {
     id: "2",
@@ -31,7 +38,9 @@ export const skills: Skill[] = [
     installs: 156200,
     trending24h: 890,
     category: "фронтенд",
+    type: "skill",
     tags: ["react", "фронтенд", "практики"],
+    addedAt: "2026-01-18",
   },
   {
     id: "3",
@@ -42,7 +51,9 @@ export const skills: Skill[] = [
     installs: 142800,
     trending24h: 760,
     category: "дизайн",
+    type: "skill",
     tags: ["дизайн", "ui", "ux"],
+    addedAt: "2026-01-20",
   },
   {
     id: "4",
@@ -53,7 +64,9 @@ export const skills: Skill[] = [
     installs: 98700,
     trending24h: 620,
     category: "фронтенд",
+    type: "skill",
     tags: ["фронтенд", "дизайн", "верстка"],
+    addedAt: "2026-01-25",
   },
   {
     id: "5",
@@ -64,7 +77,9 @@ export const skills: Skill[] = [
     installs: 87400,
     trending24h: 540,
     category: "фреймворки",
+    type: "skill",
     tags: ["nextjs", "react", "ssr"],
+    addedAt: "2026-02-01",
   },
   {
     id: "6",
@@ -75,7 +90,9 @@ export const skills: Skill[] = [
     installs: 76500,
     trending24h: 480,
     category: "языки",
+    type: "skill",
     tags: ["typescript", "паттерны", "типы"],
+    addedAt: "2026-02-05",
   },
   {
     id: "7",
@@ -86,7 +103,9 @@ export const skills: Skill[] = [
     installs: 65300,
     trending24h: 410,
     category: "стили",
+    type: "skill",
     tags: ["tailwind", "css", "стили"],
+    addedAt: "2026-02-10",
   },
   {
     id: "8",
@@ -97,7 +116,9 @@ export const skills: Skill[] = [
     installs: 54200,
     trending24h: 350,
     category: "бэкенд",
+    type: "skill",
     tags: ["api", "rest", "graphql"],
+    addedAt: "2026-02-12",
   },
   {
     id: "9",
@@ -108,7 +129,9 @@ export const skills: Skill[] = [
     installs: 48900,
     trending24h: 290,
     category: "бэкенд",
+    type: "skill",
     tags: ["postgresql", "mongodb", "оптимизация"],
+    addedAt: "2026-02-15",
   },
   {
     id: "10",
@@ -119,7 +142,9 @@ export const skills: Skill[] = [
     installs: 43100,
     trending24h: 270,
     category: "девопс",
+    type: "skill",
     tags: ["docker", "devops", "контейнеры"],
+    addedAt: "2026-02-18",
   },
   {
     id: "11",
@@ -130,7 +155,9 @@ export const skills: Skill[] = [
     installs: 39800,
     trending24h: 240,
     category: "утилиты",
+    type: "skill",
     tags: ["git", "workflow", "commits"],
+    addedAt: "2026-02-22",
   },
   {
     id: "12",
@@ -141,7 +168,9 @@ export const skills: Skill[] = [
     installs: 35600,
     trending24h: 210,
     category: "тестирование",
+    type: "skill",
     tags: ["testing", "jest", "playwright"],
+    addedAt: "2026-02-25",
   },
   {
     id: "13",
@@ -152,7 +181,9 @@ export const skills: Skill[] = [
     installs: 32400,
     trending24h: 190,
     category: "безопасность",
+    type: "skill",
     tags: ["security", "audit", "owasp"],
+    addedAt: "2026-03-01",
   },
   {
     id: "14",
@@ -163,7 +194,9 @@ export const skills: Skill[] = [
     installs: 28700,
     trending24h: 170,
     category: "бэкенд",
+    type: "skill",
     tags: ["python", "fastapi", "api"],
+    addedAt: "2026-03-05",
   },
   {
     id: "15",
@@ -174,7 +207,9 @@ export const skills: Skill[] = [
     installs: 25100,
     trending24h: 150,
     category: "фронтенд",
+    type: "skill",
     tags: ["vue", "composition-api", "фронтенд"],
+    addedAt: "2026-03-08",
   },
   {
     id: "16",
@@ -185,7 +220,9 @@ export const skills: Skill[] = [
     installs: 22400,
     trending24h: 130,
     category: "бэкенд",
+    type: "skill",
     tags: ["golang", "microservices", "бэкенд"],
+    addedAt: "2026-03-10",
   },
   {
     id: "17",
@@ -196,7 +233,9 @@ export const skills: Skill[] = [
     installs: 19800,
     trending24h: 120,
     category: "девопс",
+    type: "skill",
     tags: ["ci-cd", "github-actions", "gitlab"],
+    addedAt: "2026-03-14",
   },
   {
     id: "18",
@@ -207,7 +246,9 @@ export const skills: Skill[] = [
     installs: 17200,
     trending24h: 110,
     category: "контент",
+    type: "skill",
     tags: ["маркетинг", "копирайтинг", "контент"],
+    addedAt: "2026-03-18",
   },
   {
     id: "19",
@@ -218,7 +259,9 @@ export const skills: Skill[] = [
     installs: 15600,
     trending24h: 95,
     category: "контент",
+    type: "skill",
     tags: ["seo", "яндекс", "google"],
+    addedAt: "2026-03-20",
   },
   {
     id: "20",
@@ -229,12 +272,44 @@ export const skills: Skill[] = [
     installs: 13900,
     trending24h: 85,
     category: "мобильные",
+    type: "skill",
     tags: ["flutter", "dart", "мобильные"],
+    addedAt: "2026-03-22",
+  },
+  // --- Новые поинты с модерации (29 марта 2026) ---
+  {
+    id: "21",
+    name: "code-review-assistant",
+    owner: "community",
+    repo: "review-skills",
+    description: "Автоматический код-ревью с учётом стандартов команды",
+    installs: 0,
+    trending24h: 0,
+    category: "утилиты",
+    type: "skill",
+    tags: ["code-review", "quality", "автоматизация"],
+    addedAt: "2026-03-29",
+    isNew: true,
+  },
+  {
+    id: "22",
+    name: "yandex-tracker-mcp",
+    owner: "community",
+    repo: "mcp-servers",
+    description: "MCP-сервер для интеграции с Яндекс Трекером: задачи, спринты, комментарии",
+    installs: 0,
+    trending24h: 0,
+    category: "интеграции",
+    type: "mcp",
+    tags: ["mcp", "яндекс", "трекер", "интеграция"],
+    addedAt: "2026-03-29",
+    isNew: true,
   },
 ];
 
 export function formatInstalls(n: number): string {
-  if (n >= 1000000) return (n / 1000000).toFixed(1) + "M";
-  if (n >= 1000) return (n / 1000).toFixed(1) + "K";
-  return n.toString();
+  if (n >= 1_000_000) return (n / 1_000_000).toFixed(1).replace(/\.0$/, "") + "M";
+  if (n >= 10_000) return Math.round(n / 1_000) + "K";
+  if (n >= 1_000) return (n / 1_000).toFixed(1).replace(/\.0$/, "") + "K";
+  return n.toLocaleString("ru-RU");
 }
