@@ -150,17 +150,22 @@ export default function Header() {
                     {link.label}
                   </Link>
                 ))}
+                <div className="border-t border-gray-800 my-1" />
+                <Link
+                  href="/dashboard"
+                  onClick={() => setMoreOpen(false)}
+                  className="block px-3 py-2 text-sm text-accent hover:bg-gray-900 transition-colors"
+                >
+                  Мои навыки
+                </Link>
                 {isAdmin && (
-                  <>
-                    <div className="border-t border-gray-800 my-1" />
-                    <Link
-                      href="/admin"
-                      onClick={() => setMoreOpen(false)}
-                      className="block px-3 py-2 text-sm text-red-400 hover:text-red-300 hover:bg-gray-900 transition-colors"
-                    >
-                      Админ-панель
-                    </Link>
-                  </>
+                  <Link
+                    href="/admin"
+                    onClick={() => setMoreOpen(false)}
+                    className="block px-3 py-2 text-sm text-red-400 hover:text-red-300 hover:bg-gray-900 transition-colors"
+                  >
+                    Админ-панель
+                  </Link>
                 )}
               </div>
             )}
@@ -212,6 +217,13 @@ export default function Header() {
               {link.label}
             </Link>
           ))}
+          <Link
+            href="/dashboard"
+            onClick={() => setMobileOpen(false)}
+            className="px-3 py-2 rounded-md text-sm text-accent transition-colors"
+          >
+            Мои навыки
+          </Link>
           {isAdmin && (
             <Link
               href="/admin"
