@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import rehypeRaw from "rehype-raw";
 
 interface Message {
   role: "user" | "assistant";
@@ -167,7 +168,7 @@ export default function AgentChat() {
                 className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}
               >
                 <div
-                  className={`max-w-[85%] rounded-lg px-3 py-2 text-sm ${
+                  className={`max-w-[85%] rounded-lg px-3 py-2 text-sm overflow-hidden break-words ${
                     msg.role === "user"
                       ? "bg-accent/15 text-foreground"
                       : "bg-gray-900 text-gray-300"
@@ -177,6 +178,7 @@ export default function AgentChat() {
                     msg.content ? (
                       <Markdown
                         remarkPlugins={[remarkGfm]}
+                        rehypePlugins={[rehypeRaw]}
                         components={{
                           p: ({ children }) => <p className="mb-1.5 last:mb-0">{children}</p>,
                           a: ({ href, children }) => (
@@ -210,7 +212,7 @@ export default function AgentChat() {
                           td: ({ children }) => <td className="border border-gray-800 px-2 py-1">{children}</td>,
                         }}
                       >
-                        {msg.content}
+                        {msg.content.replace(/<br\s*\/?>/gi, "\n")}
                       </Markdown>
                     ) : (
                       <div className="flex gap-1">
