@@ -36,14 +36,15 @@ describe("GET /api/skills", () => {
     );
   });
 
-  it("filters by search query", async () => {
-    prisma.skill.findMany.mockResolvedValue([]);
+  it("filters by search query via raw SQL", async () => {
+    prisma.$queryRawUnsafe.mockResolvedValue([]);
 
     const req = makeRequest("https://skillsbd.ru/api/skills?q=yandex");
-    await GET(req);
+    const res = await GET(req);
+    const data = await res.json();
 
-    const call = prisma.skill.findMany.mock.calls[0][0];
-    expect(call.where).toBeDefined();
+    expect(prisma.$queryRawUnsafe).toHaveBeenCalled();
+    expect(data).toEqual([]);
   });
 
   it("returns empty array when no skills", async () => {
