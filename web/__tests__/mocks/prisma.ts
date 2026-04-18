@@ -1,6 +1,7 @@
 import { vi } from "vitest";
 
 export const prisma = {
+  $queryRawUnsafe: vi.fn().mockResolvedValue([]),
   skill: {
     findMany: vi.fn().mockResolvedValue([]),
     findFirst: vi.fn().mockResolvedValue(null),
